@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 class CoreController extends APIController
 {
     /**
-     * Get countries.
+     * Get every country.
      *
      * @return JsonResponse
      */
@@ -23,7 +23,7 @@ class CoreController extends APIController
     }
 
     /**
-     * Get states.
+     * Get the states of every country.
      *
      * @return JsonResponse
      */

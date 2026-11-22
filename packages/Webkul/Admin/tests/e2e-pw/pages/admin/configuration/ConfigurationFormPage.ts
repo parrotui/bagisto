@@ -1,5 +1,6 @@
 import { expect, type Locator, type Page } from "@playwright/test";
 import { BasePage } from "../../BasePage";
+import type { AdminPage } from "../../../setup";
 import { setBooleanSetting } from "../../../utils/configuration";
 
 export abstract class ConfigurationFormPage extends BasePage {
@@ -30,7 +31,21 @@ export abstract class ConfigurationFormPage extends BasePage {
     }
 
     protected selectInput(name: string): Locator {
-        return this.page.locator(`select[name="${name}"]`);
+        return this.page.locator(`input[type="hidden"][name="${name}"]`);
+    }
+
+    protected selectTrigger(name: string): Locator {
+        return this.page.locator(`[role="combobox"][name="${name}"]`);
+    }
+
+    protected selectChoice(name: string, value: string): Locator {
+        return this.page.locator(
+            `[role="listbox"][id="${name}-options"] [role="option"][data-value="${value}"]`,
+        );
+    }
+
+    private editorFrameSelector(name: string): string {
+        return `#${name.replaceAll("[", "_").replaceAll("]", "_")}_ifr`;
     }
 
     private async isRendered(locator: Locator): Promise<boolean> {
@@ -66,7 +81,9 @@ export abstract class ConfigurationFormPage extends BasePage {
             return;
         }
 
-        expect(value, "a hidden field can only be expected to be empty").toBe("");
+        expect(value, "a hidden field can only be expected to be empty").toBe(
+            "",
+        );
     }
 
     protected async readBoolean(name: string): Promise<boolean> {
@@ -127,6 +144,17 @@ export abstract class ConfigurationFormPage extends BasePage {
         });
     }
 
+    protected async setEditor(name: string, value: string): Promise<void> {
+        await this.setIfRendered(this.textArea(name), value, async () => {
+            if ((await this.textArea(name).inputValue()) !== value) {
+                await (this.page as AdminPage).fillInTinymce(
+                    this.editorFrameSelector(name),
+                    value,
+                );
+            }
+        });
+    }
+
     protected async readSelect(name: string): Promise<string> {
         if (!(await this.isRendered(this.selectInput(name)))) {
             return "";
@@ -142,7 +170,8 @@ export abstract class ConfigurationFormPage extends BasePage {
 
         await this.setIfRendered(this.selectInput(name), value, async () => {
             if ((await this.selectInput(name).inputValue()) !== value) {
-                await this.selectInput(name).selectOption(value);
+                await this.selectTrigger(name).click();
+                await this.selectChoice(name, value).click();
             }
 
             await expect(this.selectInput(name)).toHaveValue(value);

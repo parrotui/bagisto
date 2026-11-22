@@ -147,6 +147,7 @@ return [
                     'set-as-default' => '设为默认',
                     'state' => '州/省',
                     'street-address' => '街道地址',
+                    'street-address-line' => '街道地址（第:line行）',
                     'title' => '地址',
                     'vat-id' => 'VAT号码',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => '选择国家',
                     'state' => '州/省',
                     'street-address' => '街道地址',
+                    'street-address-line' => '街道地址（第:line行）',
                     'title' => '地址',
                     'update-btn' => '更新',
                     'vat-id' => 'VAT号码',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => '添加附件',
                 'add-image' => '添加图片/视频',
-                'invalid-file-type' => '不允许所选的文件类型。',
+                'invalid-file-type' => '仅允许 :types 文件。',
+                'size-limit-error' => '文件超过最大上传大小 :size。',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => '送货地址',
                 'state' => '省份',
                 'street-address' => '街道地址',
+                'street-address-line' => '街道地址（第:line行）',
                 'title' => '地址',
                 'vat-id' => 'VAT号码',
             ],

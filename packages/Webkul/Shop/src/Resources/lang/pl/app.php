@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'Ustaw jako domyślny',
                     'state' => 'Województwo',
                     'street-address' => 'Adres',
+                    'street-address-line' => 'Adres, linia :line',
                     'title' => 'Adres',
                     'vat-id' => 'Numer VAT',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'Wybierz kraj',
                     'state' => 'Województwo',
                     'street-address' => 'Adres',
+                    'street-address-line' => 'Adres, linia :line',
                     'title' => 'Adres',
                     'update-btn' => 'Aktualizuj',
                     'vat-id' => 'Numer VAT',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'Dodaj załączniki',
                 'add-image' => 'Dodaj Obraz/Wideo',
-                'invalid-file-type' => 'Wybrany typ pliku jest niedozwolony.',
+                'invalid-file-type' => 'Dozwolone są tylko pliki :types.',
+                'size-limit-error' => 'Plik przekracza maksymalny rozmiar przesyłania :size.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'Adres dostawy',
                 'state' => 'Województwo',
                 'street-address' => 'Adres ulicy',
+                'street-address-line' => 'Adres ulicy, linia :line',
                 'title' => 'Adres',
                 'vat-id' => 'Numer VAT',
             ],

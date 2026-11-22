@@ -160,7 +160,10 @@
                                                 {{ $item->getTypeInstance()->getOrderedItem($item)->sku }}
                                             </td>
 
-                                            <td data-value="@lang('shop::app.customers.account.orders.view.information.product-name')">
+                                            <td
+                                                class="wrap-anywhere"
+                                                data-value="@lang('shop::app.customers.account.orders.view.information.product-name')"
+                                            >
                                                 {{ $item->name }}
 
                                                 @if (isset($item->additional['attributes']))
@@ -536,7 +539,7 @@
                             <x-slot:content class="grid gap-2.5 bg-gray-100! p-0!">
                                 @foreach ($order->items as $item)
                                     <div class="rounded-md rounded-t-none border border-t-0 bg-white px-4 py-2">
-                                        <p class="pb-2 text-sm font-medium">
+                                        <p class="pb-2 text-sm font-medium wrap-anywhere">
                                             {{ $item->name }}
 
                                             @if (isset($item->additional['attributes']))
@@ -652,39 +655,6 @@
                                                         {{ core()->formatPrice($item->total, $order->order_currency_code) }}
                                                     @endif
                                                 </span>
-                                            </div>
-
-                                            <!-- Tax Percent -->
-                                            <div class="flex justify-between">
-                                                <span class="text-zinc-500">
-                                                    @lang('shop::app.customers.account.orders.view.information.tax-percent')
-                                                </span>
-
-                                                <p>
-                                                    {{ $item->tax_percent }}
-                                                </p>
-                                            </div>
-
-                                            <!-- Tax Amount -->
-                                            <div class="flex justify-between">
-                                                <span class="text-zinc-500">
-                                                    @lang('shop::app.customers.account.orders.view.information.tax-amount')
-                                                </span>
-
-                                                <p>
-                                                    {{ $item->tax_amount }}
-                                                </p>
-                                            </div>
-
-                                            <!-- Grand Total -->
-                                            <div class="flex justify-between">
-                                                <span class="text-zinc-500">
-                                                    @lang('shop::app.customers.account.orders.view.information.grand-total')
-                                                </span>
-
-                                                <p>
-                                                    {{ core()->formatPrice($order->grand_total, $order->order_currency_code) }}
-                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -887,7 +857,7 @@
                                     </p>
 
                                     <p>
-                                        {{ core()->formatBasePrice($order->base_total_due) }}
+                                        {{ core()->formatPrice($order->total_due, $order->order_currency_code) }}
                                     </p>
                                 </div>
 
@@ -939,7 +909,7 @@
                                         <x-slot:content class="grid gap-2.5 bg-gray-100! p-0!">
                                             @foreach ($invoice->items as $item)
                                                 <div class="rounded-md rounded-t-none border border-t-0 bg-white px-4 py-2">
-                                                    <p class="pb-2 text-sm font-medium">
+                                                    <p class="pb-2 text-sm font-medium wrap-anywhere">
                                                         {{ $item->name }}
                                                     </p>
 
@@ -1228,7 +1198,10 @@
                                                             {{ $item->getTypeInstance()->getOrderedItem($item)->sku }}
                                                         </td>
 
-                                                        <td data-value="@lang('shop::app.customers.account.orders.view.invoices.product-name')">
+                                                        <td
+                                                            class="wrap-anywhere"
+                                                            data-value="@lang('shop::app.customers.account.orders.view.invoices.product-name')"
+                                                        >
                                                             {{ $item->name }}
 
                                                             @if (isset($item->additional['attributes']))
@@ -1479,7 +1452,10 @@
                                                             {{ $item->sku }}
                                                         </td>
 
-                                                        <td data-value="@lang('shop::app.customers.account.orders.view.shipments.product-name')">
+                                                        <td
+                                                            class="wrap-anywhere"
+                                                            data-value="@lang('shop::app.customers.account.orders.view.shipments.product-name')"
+                                                        >
                                                             {{ $item->name }}
 
                                                             @if (isset($item->additional['attributes']))
@@ -1531,7 +1507,7 @@
                                         <x-slot:content class="grid gap-2.5 bg-gray-100! p-0!">
                                             @foreach ($shipment->items as $item)
                                                 <div class="rounded-md rounded-t-none border border-t-0 bg-white px-4 py-2">
-                                                    <p class="pb-2 text-sm font-medium">
+                                                    <p class="pb-2 text-sm font-medium wrap-anywhere">
                                                         {{ $item->name }}
                                                     </p>
 
@@ -1617,7 +1593,10 @@
                                                         {{ $item->getTypeInstance()->getOrderedItem($item)->sku }}
                                                     </td>
 
-                                                    <td data-value="@lang('shop::app.customers.account.orders.view.refunds.product-name')">
+                                                    <td
+                                                        class="wrap-anywhere"
+                                                        data-value="@lang('shop::app.customers.account.orders.view.refunds.product-name')"
+                                                    >
                                                         {{ $item->name }}
 
                                                         @if (isset($item->additional['attributes']))
@@ -1710,7 +1689,7 @@
                                     <x-slot:content class="grid gap-2.5 bg-gray-100! p-0!">
                                         @foreach ($invoice->items as $item)
                                             <div class="rounded-md rounded-t-none border border-t-0 bg-white px-4 py-2">
-                                                <p class="pb-2 text-sm font-medium">
+                                                <p class="pb-2 text-sm font-medium wrap-anywhere">
                                                     {{ $item->name }}
                                                 </p>
 

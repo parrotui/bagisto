@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'קבע כברירת מחדל',
                     'state' => 'מדינה',
                     'street-address' => 'כתובת',
+                    'street-address-line' => 'כתובת, שורה :line',
                     'title' => 'כתובת',
                     'vat-id' => 'מספר עוסק מורשה',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'בחר מדינה',
                     'state' => 'מדינה',
                     'street-address' => 'כתובת',
+                    'street-address-line' => 'כתובת, שורה :line',
                     'title' => 'כתובת',
                     'update-btn' => 'עדכון',
                     'vat-id' => 'מספר עוסק מורשה',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'הוסף קבצים מצורפים',
                 'add-image' => 'הוסף תמונה/וידאו',
-                'invalid-file-type' => 'סוג הקובץ שנבחר אינו מותר.',
+                'invalid-file-type' => 'ניתן להעלות רק קבצי :types.',
+                'size-limit-error' => 'הקובץ חורג מגודל ההעלאה המרבי של :size.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'כתובת למשלוח',
                 'state' => 'מדינה',
                 'street-address' => 'כתובת',
+                'street-address-line' => 'כתובת, שורה :line',
                 'title' => 'כתובת',
                 'vat-id' => 'מספר עוסק מורשה',
             ],

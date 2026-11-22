@@ -20,7 +20,9 @@ Route::group(['prefix' => 'api'], function () {
     });
 
     Route::controller(CategoryController::class)->prefix('categories')->group(function () {
-        Route::get('', 'index')->name('shop.api.categories.index');
+        Route::get('', 'index')
+            ->middleware('preview')
+            ->name('shop.api.categories.index');
 
         Route::get('tree', 'tree')->name('shop.api.categories.tree');
 
@@ -32,7 +34,9 @@ Route::group(['prefix' => 'api'], function () {
     });
 
     Route::controller(ProductController::class)->prefix('products')->group(function () {
-        Route::get('', 'index')->name('shop.api.products.index');
+        Route::get('', 'index')
+            ->middleware('preview')
+            ->name('shop.api.products.index');
 
         Route::get('{id}/related', 'relatedProducts')->name('shop.api.products.related.index');
 
@@ -102,6 +106,12 @@ Route::group(['prefix' => 'api'], function () {
      */
     Route::controller(CustomerController::class)->prefix('customer')->group(function () {
         Route::post('login', 'login')->name('shop.api.customers.session.create');
+    });
+
+    Route::controller(AddressController::class)->prefix('customer/addresses')->group(function () {
+        Route::get('allowed-countries', 'allowedCountries')->name('shop.api.customers.addresses.allowed_countries');
+
+        Route::get('allowed-states', 'allowedStates')->name('shop.api.customers.addresses.allowed_states');
     });
 
     Route::group(['middleware' => ['customer'], 'prefix' => 'customer'], function () {

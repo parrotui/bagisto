@@ -1,11 +1,51 @@
 <?php
 
+use Webkul\Core\Models\Channel;
+use Webkul\Core\Models\CoreConfig;
 use Webkul\Customer\Models\Customer;
 use Webkul\Customer\Models\CustomerAddress;
 
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
+use function Pest\Laravel\postJson;
 use function Pest\Laravel\put;
+use function Pest\Laravel\putJson;
+
+/**
+ * Create a customer on a channel of their own, carrying the address settings given.
+ */
+function customerOnChannelWith(array $settings): Customer
+{
+    $channel = Channel::factory()->create();
+
+    foreach ($settings as $code => $value) {
+        CoreConfig::factory()->create([
+            'code' => $code,
+            'value' => $value,
+            'channel_code' => $channel->code,
+        ]);
+    }
+
+    return Customer::factory()->create(['channel_id' => $channel->id]);
+}
+
+/**
+ * The address the admin modal posts for the given customer.
+ */
+function adminAddressPayload(Customer $customer, array $attributes = []): array
+{
+    return array_merge([
+        'first_name' => 'Demo',
+        'last_name' => 'Customer',
+        'email' => $customer->email,
+        'address' => ['1 Test Street'],
+        'country' => 'IN',
+        'state' => 'UP',
+        'city' => 'Noida',
+        'postcode' => '201301',
+        'phone' => '1234567890',
+    ], $attributes);
+}
 
 beforeEach(function () {
     $this->loginAsAdmin();
@@ -184,4 +224,91 @@ it('should answer not found when recording an address for a customer that does n
         'postcode' => '201301',
         'phone' => '1234567890',
     ])->assertNotFound();
+});
+
+// ============================================================================
+// Validation
+// ============================================================================
+
+it('should refuse street lines that together run past the address column', function () {
+    $customer = Customer::factory()->create();
+
+    postJson(route('admin.customers.customers.addresses.store', $customer->id), [
+        'first_name' => 'Demo',
+        'last_name' => 'Customer',
+        'email' => $customer->email,
+        'address' => [str_repeat('a', 200), str_repeat('b', 60)],
+        'country' => 'IN',
+        'state' => 'UP',
+        'city' => 'Noida',
+        'postcode' => '201301',
+        'phone' => '1234567890',
+    ])
+        ->assertUnprocessable()
+        ->assertOnlyJsonValidationErrors(['address']);
+
+    expect(CustomerAddress::where('customer_id', $customer->id)->count())->toBe(0);
+});
+
+// ============================================================================
+// The Customer Channel Decides The Address Settings
+// ============================================================================
+
+it('should offer the street lines and countries of the customer channel on the address modals', function () {
+    $customer = customerOnChannelWith([
+        'customer.address.information.street_lines' => 3,
+        'customer.address.countries.allowed' => 'IN',
+    ]);
+
+    get(route('admin.customers.customers.view', $customer->id))
+        ->assertOk()
+        ->assertSee('placeholder="'.trans('admin::app.customers.customers.view.address.create.street-address-line', ['line' => 3]).'"', false)
+        ->assertSee('placeholder="'.trans('admin::app.customers.customers.view.address.edit.street-address-line', ['line' => 3]).'"', false)
+        ->assertSee('<option value="IN">', false)
+        ->assertDontSee('<option value="US">', false);
+});
+
+it('should refuse an address in a country the customer channel does not allow', function () {
+    $customer = customerOnChannelWith(['customer.address.countries.allowed' => 'IN']);
+
+    postJson(route('admin.customers.customers.addresses.store', $customer->id), adminAddressPayload($customer, [
+        'country' => 'US',
+        'state' => 'CA',
+    ]))
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors(['country' => trans('customer::app.validations.allowed-country.not-allowed')]);
+
+    expect(CustomerAddress::where('customer_id', $customer->id)->count())->toBe(0);
+});
+
+it('should refuse to move an address to a country the customer channel does not allow', function () {
+    $customer = customerOnChannelWith(['customer.address.countries.allowed' => 'IN']);
+
+    $address = CustomerAddress::factory()->create([
+        'customer_id' => $customer->id,
+        'country' => 'IN',
+        'state' => 'UP',
+    ]);
+
+    putJson(route('admin.customers.customers.addresses.update', $address->id), adminAddressPayload($customer, [
+        'country' => 'US',
+        'state' => 'CA',
+    ]))
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors(['country' => trans('customer::app.validations.allowed-country.not-allowed')]);
+
+    expect($address->refresh()->country)->toBe('IN');
+});
+
+it('should check the country against the customer channel rather than the default one', function () {
+    $this->setConfig('customer.address.countries.allowed', 'IN');
+
+    $customer = customerOnChannelWith([]);
+
+    postJson(route('admin.customers.customers.addresses.store', $customer->id), adminAddressPayload($customer, [
+        'country' => 'US',
+        'state' => 'CA',
+    ]))->assertOk();
+
+    expect(CustomerAddress::where('customer_id', $customer->id)->value('country'))->toBe('US');
 });

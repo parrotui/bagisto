@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'Установить по умолчанию',
                     'state' => 'Область',
                     'street-address' => 'Улица и номер дома',
+                    'street-address-line' => 'Улица и номер дома, строка :line',
                     'title' => 'Адрес',
                     'vat-id' => 'Идентификационный номер НДС',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'Выберите страну',
                     'state' => 'Область',
                     'street-address' => 'Улица и номер дома',
+                    'street-address-line' => 'Улица и номер дома, строка :line',
                     'title' => 'Адрес',
                     'update-btn' => 'Обновить',
                     'vat-id' => 'Идентификационный номер НДС',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'Добавить вложения',
                 'add-image' => 'Добавить изображение/видео',
-                'invalid-file-type' => 'Выбранный тип файла не разрешён.',
+                'invalid-file-type' => 'Разрешены только файлы :types.',
+                'size-limit-error' => 'Файл превышает максимальный размер загрузки :size.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'Адрес доставки',
                 'state' => 'Регион',
                 'street-address' => 'Улица, дом',
+                'street-address-line' => 'Улица, дом, строка :line',
                 'title' => 'Адрес',
                 'vat-id' => 'Идентификационный номер НДС',
             ],

@@ -4,15 +4,18 @@ namespace Webkul\Shop\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Webkul\Checkout\Facades\Cart;
+use Webkul\Core\Rules\AddressLines;
 use Webkul\Core\Rules\PhoneNumber;
 use Webkul\Core\Rules\PostCode;
 use Webkul\Core\Rules\StateBelongsToCountry;
+use Webkul\Customer\Facades\AddressSettings;
+use Webkul\Customer\Rules\AllowedCountry;
 use Webkul\Customer\Rules\VatIdRule;
 
 class CartAddressRequest extends FormRequest
 {
     /**
-     * Rules.
+     * The validation rules gathered for the addresses the request carries.
      *
      * @var array
      */
@@ -51,24 +54,25 @@ class CartAddressRequest extends FormRequest
     private function mergeAddressRules(string $addressType): void
     {
         $this->mergeWithRules([
-            "{$addressType}.company_name" => ['nullable'],
-            "{$addressType}.first_name" => ['required'],
-            "{$addressType}.last_name" => ['required'],
-            "{$addressType}.email" => ['required'],
-            "{$addressType}.address" => ['required', 'array', 'min:1'],
-            "{$addressType}.city" => ['required'],
-            "{$addressType}.country" => core()->isCountryRequired() ? ['required'] : ['nullable'],
+            "{$addressType}.company_name" => ['nullable', 'max:255'],
+            "{$addressType}.first_name" => ['required', 'max:255'],
+            "{$addressType}.last_name" => ['required', 'max:255'],
+            "{$addressType}.email" => ['required', 'max:255'],
+            "{$addressType}.address" => ['required', 'array', 'min:1', new AddressLines],
+            "{$addressType}.city" => ['required', 'max:255'],
+            "{$addressType}.country" => [AddressSettings::isCountryRequired() ? 'required' : 'nullable', new AllowedCountry],
             "{$addressType}.state" => [
-                core()->isStateRequired() ? 'required' : 'nullable',
+                AddressSettings::isStateRequired() ? 'required' : 'nullable',
+                'max:255',
                 new StateBelongsToCountry($this->input("{$addressType}.country")),
             ],
-            "{$addressType}.postcode" => core()->isPostCodeRequired() ? ['required', new PostCode] : [new PostCode],
-            "{$addressType}.phone" => ['required', new PhoneNumber],
+            "{$addressType}.postcode" => AddressSettings::isPostCodeRequired() ? ['required', 'max:255', new PostCode] : ['max:255', new PostCode],
+            "{$addressType}.phone" => ['required', 'max:255', new PhoneNumber],
         ]);
 
         if ($addressType == 'billing') {
             $this->mergeWithRules([
-                "{$addressType}.vat_id" => [(new VatIdRule)->setCountry($this->input('billing.country'))],
+                "{$addressType}.vat_id" => ['max:255', (new VatIdRule)->setCountry($this->input('billing.country'))],
             ]);
         }
     }

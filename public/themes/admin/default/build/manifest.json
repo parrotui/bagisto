@@ -268,7 +268,7 @@
     "isDynamicEntry": true
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-BpvCriG5.css",
+    "file": "assets/app-w74OFWbt.css",
     "src": "src/Resources/assets/css/app.css",
     "isEntry": true
   },
@@ -488,6 +488,10 @@
     "file": "assets/store-DyMTCGK9.svg",
     "src": "src/Resources/assets/images/settings/store.svg"
   },
+  "src/Resources/assets/images/settings/system-health.svg": {
+    "file": "assets/system-health-BsSxRA7o.svg",
+    "src": "src/Resources/assets/images/settings/system-health.svg"
+  },
   "src/Resources/assets/images/settings/tax.svg": {
     "file": "assets/tax-BQgwf9VP.svg",
     "src": "src/Resources/assets/images/settings/tax.svg"
@@ -517,7 +521,7 @@
     "src": "src/Resources/assets/images/unpaid-invoices.svg"
   },
   "src/Resources/assets/js/app.js": {
-    "file": "assets/app-lMiYVF7Y.js",
+    "file": "assets/app-OcYlhD50.js",
     "name": "app",
     "src": "src/Resources/assets/js/app.js",
     "isEntry": true,
@@ -581,7 +585,7 @@
     "isEntry": true
   },
   "src/Resources/assets/js/echo.js": {
-    "file": "assets/echo-CTK1Dwf6.js",
+    "file": "assets/echo-DWY2wxk7.js",
     "name": "echo",
     "src": "src/Resources/assets/js/echo.js",
     "isEntry": true,

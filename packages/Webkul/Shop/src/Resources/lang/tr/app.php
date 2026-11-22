@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'Varsayılan Olarak Ayarla',
                     'state' => 'Şehir / Bölge',
                     'street-address' => 'Adres Detayı',
+                    'street-address-line' => 'Adres Detayı, :line. Satır',
                     'title' => 'Adres',
                     'vat-id' => 'Vergi/KDV No',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'Ülke Seçin',
                     'state' => 'Şehir / Bölge',
                     'street-address' => 'Adres Detayı',
+                    'street-address-line' => 'Adres Detayı, :line. Satır',
                     'title' => 'Adresi Düzenle',
                     'update-btn' => 'Güncelle',
                     'vat-id' => 'Vergi/KDV No',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'Dosya Ekle',
                 'add-image' => 'Resim/Video Ekle',
-                'invalid-file-type' => 'Seçilen dosya türüne izin verilmiyor.',
+                'invalid-file-type' => 'Yalnızca :types dosyalarına izin verilir.',
+                'size-limit-error' => 'Dosya, :size olan en yüksek yükleme boyutunu aşıyor.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'Teslimat Adresi',
                 'state' => 'Şehir',
                 'street-address' => 'Adres Detayı',
+                'street-address-line' => 'Adres Detayı, :line. Satır',
                 'title' => 'Adres Bilgileri',
                 'vat-id' => 'Vergi/KDV No',
             ],

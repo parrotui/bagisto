@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Webkul\Category\Repositories\CategoryRepository;
 use Webkul\Core\Http\Middleware\SecureHeaders;
+use Webkul\ImageCache\TemplateRegistry;
+use Webkul\Shop\Http\Middleware\PreviewChannel;
+use Webkul\Shop\Http\Middleware\PreviewImageTheme;
 use Webkul\Shop\Http\Requests\ContactRequest;
 use Webkul\Shop\Http\Resources\CategoryTreeResource;
 use Webkul\Shop\Mail\ContactUs;
@@ -22,8 +25,6 @@ class HomeController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct(
         protected SectionRepository $sectionRepository,
@@ -50,8 +51,8 @@ class HomeController extends Controller
     }
 
     /**
-     * Render a channel's home page in the requested theme from unpublished section edits, for the
-     * appearance area.
+     * Render the previewed channel's home page in the requested theme from unpublished section edits, with every
+     * image cut as that theme cuts it, for the appearance area.
      *
      * @return View
      */
@@ -59,14 +60,15 @@ class HomeController extends Controller
     {
         abort_unless(bouncer()->hasPermission('appearance.sections'), 403);
 
-        $channel = core()->getAllChannels()->firstWhere('code', request('channel'))
-            ?? core()->getCurrentChannel();
+        $channel = core()->getCurrentChannel();
 
         $themeCode = $this->previewedTheme($channel->theme);
 
         request()->attributes->set(SecureHeaders::FRAMABLE, true);
 
         request()->attributes->set(SectionRepository::PREVIEWING, true);
+
+        request()->attributes->set(TemplateRegistry::PINNED_THEME, $themeCode);
 
         $previewed = clone $channel;
 
@@ -89,15 +91,18 @@ class HomeController extends Controller
         return view('shop::home.index', compact('sections', 'categories') + [
             'preview' => true,
             'previewTheme' => app(ThemeCatalog::class)->find($themeCode)['name'] ?? $themeCode,
+            'catalogQuery' => [
+                PreviewImageTheme::PARAMETER => $themeCode,
+                PreviewChannel::PARAMETER => $channel->code,
+                PreviewChannel::LOCALE_PARAMETER => app()->getLocale(),
+            ],
         ]);
     }
 
     /**
-     * Loads the home page for the storefront if something wrong.
-     *
-     * @return \Exception
+     * Answer the request as not found.
      */
-    public function notFound()
+    public function notFound(): never
     {
         abort(404);
     }

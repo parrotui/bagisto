@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'Als Standard festlegen',
                     'state' => 'Bundesland',
                     'street-address' => 'Straße und Hausnummer',
+                    'street-address-line' => 'Straße und Hausnummer, Zeile :line',
                     'title' => 'Adresse',
                     'vat-id' => 'USt-IdNr.',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'Land auswählen',
                     'state' => 'Bundesland',
                     'street-address' => 'Straße und Hausnummer',
+                    'street-address-line' => 'Straße und Hausnummer, Zeile :line',
                     'title' => 'Adresse',
                     'update-btn' => 'Aktualisieren',
                     'vat-id' => 'USt-IdNr.',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'Anhänge hinzufügen',
                 'add-image' => 'Bild/Video hinzufügen',
-                'invalid-file-type' => 'Der ausgewählte Dateityp ist nicht zulässig.',
+                'invalid-file-type' => 'Nur :types-Dateien sind erlaubt.',
+                'size-limit-error' => 'Die Datei überschreitet die maximale Uploadgröße von :size.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'Versandadresse',
                 'state' => 'Bundesland',
                 'street-address' => 'Straßenadresse',
+                'street-address-line' => 'Straßenadresse, Zeile :line',
                 'title' => 'Adresse',
                 'vat-id' => 'USt-IdNr.',
             ],

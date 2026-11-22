@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
@@ -108,6 +109,16 @@ it('should fail validation when required fields are missing on profile update', 
         ->assertJsonValidationErrorFor('last_name')
         ->assertJsonValidationErrorFor('gender')
         ->assertJsonValidationErrorFor('email');
+});
+
+it('should name the profile image by its label when it is not an image', function () {
+    $this->loginAsCustomer();
+
+    postJson(route('shop.customers.account.profile.update'), [
+        'image' => [UploadedFile::fake()->image('avatar.php')],
+    ])
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors(['image.0' => 'The Profile Image field']);
 });
 
 it('should update the profile when the same email exists on another channel', function () {
@@ -292,6 +303,18 @@ it('should fail validation when required fields are missing on address store', f
         ->assertJsonValidationErrorFor('country');
 });
 
+it('should refuse street lines that together run past the address column on address store', function () {
+    $customer = $this->loginAsCustomer();
+
+    postJson(route('shop.customers.account.addresses.store'), $this->storefrontAddress([
+        'address' => [str_repeat('a', 200), str_repeat('b', 60)],
+    ]))
+        ->assertUnprocessable()
+        ->assertOnlyJsonValidationErrors(['address']);
+
+    $this->assertDatabaseMissing('addresses', ['customer_id' => $customer->id]);
+});
+
 it('should return the address edit page', function () {
     $customer = Customer::factory()->create();
 
@@ -302,6 +325,35 @@ it('should return the address edit page', function () {
     get(route('shop.customers.account.addresses.edit', $address->id))
         ->assertOk()
         ->assertSeeText(trans('shop::app.customers.account.addresses.edit.title'));
+});
+
+it('should number the street lines on the address forms when the store takes several', function () {
+    $this->setConfig('customer.address.information.street_lines', 3);
+
+    $customer = Customer::factory()->create();
+
+    $address = addressOf($customer, ['address' => "12 Baker Street\nFlat 4B\nNear Central Park"]);
+
+    $this->loginAsCustomer($customer);
+
+    get(route('shop.customers.account.addresses.create'))
+        ->assertOk()
+        ->assertSee('placeholder="'.trans('shop::app.customers.account.addresses.create.street-address-line', ['line' => 1]).'"', false)
+        ->assertSee('placeholder="'.trans('shop::app.customers.account.addresses.create.street-address-line', ['line' => 3]).'"', false);
+
+    get(route('shop.customers.account.addresses.edit', $address->id))
+        ->assertOk()
+        ->assertSee('placeholder="'.trans('shop::app.customers.account.addresses.edit.street-address-line', ['line' => 3]).'"', false)
+        ->assertSee('value="Near Central Park"', false);
+});
+
+it('should keep a single street line unnumbered on the address form', function () {
+    $this->loginAsCustomer();
+
+    get(route('shop.customers.account.addresses.create'))
+        ->assertOk()
+        ->assertSee('placeholder="'.trans('shop::app.customers.account.addresses.create.street-address').'"', false)
+        ->assertDontSee(trans('shop::app.customers.account.addresses.create.street-address-line', ['line' => 1]));
 });
 
 it('should not show the address edit page of another customer', function () {
@@ -416,7 +468,7 @@ it('should not delete the address of another customer', function () {
     $this->assertDatabaseHas('addresses', ['id' => $address->id]);
 });
 
-it('should not let the address api update the address of another customer', function () {
+it('should not let the address API update the address of another customer', function () {
     $address = addressOf(Customer::factory()->create());
 
     $this->loginAsCustomer();

@@ -229,7 +229,7 @@ class RequestController extends Controller
             'information' => 'nullable|string',
             'images' => 'nullable|array|min:1',
             'images.*' => 'nullable|file|mimetypes:'.core()->getConfigData('sales.rma.setting.allowed_file_extension'),
-        ]);
+        ], [], ['images.*' => trans('admin::app.catalog.products.edit.images.title')]);
 
         $data = request()->only([
             'order_id',
@@ -319,7 +319,10 @@ class RequestController extends Controller
      */
     public function getOrderItems(int $orderId): Collection
     {
-        return $this->rmaHelper->getOrderItems($orderId);
+        return $this->rmaHelper->getOrderItems($orderId)
+            ->each(function ($orderItem) {
+                $orderItem->formatted_price = core()->formatBasePrice($orderItem->base_price);
+            });
     }
 
     /**

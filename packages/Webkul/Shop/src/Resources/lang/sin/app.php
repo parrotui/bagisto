@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'පෙරනිමි ලිපිනයක් ලැබෙන්න',
                     'state' => 'පළාත',
                     'street-address' => 'වීදි ලිපිනය',
+                    'street-address-line' => 'වීදි ලිපිනය, රේඛාව :line',
                     'title' => 'ලිපිනය',
                     'vat-id' => 'වැට් අංකය',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'රටක් තෝරන්න',
                     'state' => 'පළාත',
                     'street-address' => 'වීදි ලිපිනය',
+                    'street-address-line' => 'වීදි ලිපිනය, රේඛාව :line',
                     'title' => 'ලිපිනය',
                     'update-btn' => 'යාවත්කාල කරන්න',
                     'vat-id' => 'වැට් අංකය',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'ඇඩෙක්මෙන්ට් එකක් එක්කරන්න',
                 'add-image' => 'රූපයක්/වීඩියෝ එකතු කරන්න',
-                'invalid-file-type' => 'තෝරාගත් ගොනු වර්ගය අවසර නැත.',
+                'invalid-file-type' => ':types ගොනු පමණක් අවසර ඇත.',
+                'size-limit-error' => 'ගොනුව උපරිම උඩුගත කිරීමේ ප්‍රමාණය :size ඉක්මවයි.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'සහිත ලිපිනය',
                 'state' => 'රාජ්‍යය',
                 'street-address' => 'වීදි ලිපිනය',
+                'street-address-line' => 'වීදි ලිපිනය, රේඛාව :line',
                 'title' => 'ලිපිනය',
                 'vat-id' => 'වැට් අංකය',
             ],

@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'ডিফল্ট হিসাবে সেট করুন',
                     'state' => 'রাষ্ট্র',
                     'street-address' => 'রাস্তার ঠিকানা',
+                    'street-address-line' => 'রাস্তার ঠিকানা, লাইন :line',
                     'title' => 'ঠিকানা',
                     'vat-id' => 'ভ্যাট আইডি',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'দেশ নির্বাচন করুন',
                     'state' => 'রাষ্ট্র',
                     'street-address' => 'রাস্তার ঠিকানা',
+                    'street-address-line' => 'রাস্তার ঠিকানা, লাইন :line',
                     'title' => 'ঠিকানা',
                     'update-btn' => 'আপডেট করুন',
                     'vat-id' => 'ভ্যাট আইডি',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'সংযুক্তি যোগ করুন',
                 'add-image' => 'ছবি / ভিডিও যোগ করুন',
-                'invalid-file-type' => 'নির্বাচিত ফাইলের ধরন অনুমোদিত নয়।',
+                'invalid-file-type' => 'কেবল :types ফাইল অনুমোদিত।',
+                'size-limit-error' => 'ফাইলটি সর্বোচ্চ আপলোড আকার :size অতিক্রম করেছে।',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'শিপিং ঠিকানা',
                 'state' => 'রাষ্ট্র',
                 'street-address' => 'রাস্তার ঠিকানা',
+                'street-address-line' => 'রাস্তার ঠিকানা, লাইন :line',
                 'title' => 'ঠিকানা',
                 'vat-id' => 'ভ্যাট আইডি',
             ],

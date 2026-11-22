@@ -4,6 +4,7 @@ namespace Webkul\Shop\Http\Controllers\API;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Event;
+use Webkul\Customer\AddressSettings;
 use Webkul\Customer\Repositories\CustomerAddressRepository;
 use Webkul\Shop\Http\Requests\Customer\AddressRequest;
 use Webkul\Shop\Http\Resources\AddressResource;
@@ -11,11 +12,34 @@ use Webkul\Shop\Http\Resources\AddressResource;
 class AddressController extends APIController
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * Create a new controller instance. The address settings are optional so a subclass passing only the repository still works.
      */
-    public function __construct(protected CustomerAddressRepository $customerAddressRepository) {}
+    public function __construct(
+        protected CustomerAddressRepository $customerAddressRepository,
+        protected ?AddressSettings $addressSettings = null,
+    ) {
+        $this->addressSettings ??= app(AddressSettings::class);
+    }
+
+    /**
+     * Get the countries an address on the storefront can be in.
+     */
+    public function allowedCountries(): JsonResource
+    {
+        return new JsonResource($this->addressSettings->allowedCountries()->map(fn ($country) => [
+            'id' => $country->id,
+            'code' => $country->code,
+            'name' => $country->name,
+        ]));
+    }
+
+    /**
+     * Get the states of the countries an address on the storefront can be in.
+     */
+    public function allowedStates(): JsonResource
+    {
+        return new JsonResource($this->addressSettings->allowedGroupedStates());
+    }
 
     /**
      * Customer addresses.

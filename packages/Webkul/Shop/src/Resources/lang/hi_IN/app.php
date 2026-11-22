@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'डिफ़ॉल्ट के रूप में सेट करें',
                     'state' => 'राज्य',
                     'street-address' => 'सड़क का पता',
+                    'street-address-line' => 'सड़क का पता, पंक्ति :line',
                     'title' => 'पता',
                     'vat-id' => 'वैट आईडी',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'देश चुनें',
                     'state' => 'राज्य',
                     'street-address' => 'सड़क का पता',
+                    'street-address-line' => 'सड़क का पता, पंक्ति :line',
                     'title' => 'पता',
                     'update-btn' => 'अपडेट करें',
                     'vat-id' => 'वैट आईडी',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'अटैचमेंट जोड़ें',
                 'add-image' => 'चित्र/वीडियो जोड़ें',
-                'invalid-file-type' => 'चयनित फ़ाइल प्रकार की अनुमति नहीं है।',
+                'invalid-file-type' => 'केवल :types फ़ाइलें अनुमत हैं।',
+                'size-limit-error' => 'फ़ाइल अधिकतम अपलोड आकार :size से अधिक है।',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'शिपिंग पता',
                 'state' => 'राज्य',
                 'street-address' => 'स्ट्रीट पता',
+                'street-address-line' => 'स्ट्रीट पता, पंक्ति :line',
                 'title' => 'पता',
                 'vat-id' => 'वैट आईडी',
             ],

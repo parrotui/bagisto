@@ -46,14 +46,35 @@ return [
     ],
 
     'notifications' => [
+        'all' => 'Tümü',
+        'description' => 'Siparişleri, müşterileri ve ilgilenmeniz gereken her şeyi takip edin.',
         'description-text' => 'Tüm Bildirimleri Listele',
+        'empty-description' => 'Yeni bildirimler geldiğinde burada görünecek.',
+        'empty-title' => 'Her şeyi gördünüz',
+        'mark-all-read' => 'Tümünü okundu olarak işaretle',
+        'mark-read' => 'Okundu olarak işaretle',
+        'mark-unread' => 'Okunmadı olarak işaretle',
+        'marked-all-read' => 'Tüm bildirimler okundu olarak işaretlendi.',
         'marked-success' => 'Tüm bildirimler okundu olarak işaretlendi',
         'no-record' => 'Kayıt Bulunamadı',
         'of' => 'of',
         'per-page' => 'Sayfa Başına',
         'read-all' => 'Tümünü Okundu Olarak İşaretle',
         'title' => 'Bildirimler',
-        'view-all' => 'Tümünü Görüntüle',
+        'today' => 'Bugün',
+        'unread' => 'Okunmamış',
+        'view-all' => 'Tüm bildirimleri görüntüle',
+        'yesterday' => 'Dün',
+
+        'groups' => [
+            'customers' => 'Müşteriler',
+            'gdpr' => 'GDPR Veri Talepleri',
+            'imports' => 'Importlar',
+            'orders' => 'Siparişler',
+            'returns' => 'RMA Talepleri',
+            'reviews' => 'Değerlendirmeler',
+            'system' => 'Sistem',
+        ],
 
         'order-status-messages' => [
             'all' => 'Tümü',
@@ -63,6 +84,111 @@ return [
             'pending' => 'Sipariş Bekliyor',
             'pending-payment' => 'Bekleyen Ödeme',
             'processing' => 'Sipariş İşleniyor',
+        ],
+
+        'types' => [
+            'app-url-mismatch' => [
+                'message' => 'APP_URL değeri :url, ancak mağaza :host üzerinden sunuluyor. E-postalardaki bağlantılar hatalı olacak.',
+                'title' => 'APP_URL mağaza adresiyle eşleşmiyor',
+            ],
+
+            'broadcast-unreachable' => [
+                'message' => 'Yayın sunucusu yanıt vermedi, bu nedenle bildirimler canlı güncellenmeyecek.',
+                'title' => 'Gerçek zamanlı bildirimlere ulaşılamıyor',
+            ],
+
+            'customer-registered' => [
+                'message' => ':name · :email',
+                'title' => 'Yeni müşteri kaydoldu',
+            ],
+
+            'debug-mode-enabled' => [
+                'message' => 'Hata sayfaları ziyaretçilere dahili ayrıntıları gösteriyor. APP_DEBUG=false olarak ayarlayın.',
+                'title' => 'Üretim ortamında hata ayıklama modu açık',
+            ],
+
+            'exchange-rates-stale' => [
+                'message' => 'Kurlar zamanında güncellenmedi. Döviz kuru hizmetini ve API anahtarını kontrol edin.',
+                'title' => 'Döviz kurları güncel değil',
+            ],
+
+            'failed-jobs' => [
+                'message' => ':count başarısız iş bekliyor. php artisan queue:failed ile inceleyin.',
+                'title' => 'Kuyruktaki işler başarısız oluyor',
+            ],
+
+            'gdpr-requested' => [
+                'delete-title' => 'Yeni veri silme talebi',
+                'message' => ':customer tarafından',
+                'update-title' => 'Yeni veri güncelleme talebi',
+            ],
+
+            'import-completed' => [
+                'message' => ':processed satır işlendi',
+                'message-skipped' => ':processed satır işlendi, :skipped satır atlandı',
+                'title' => ':type içe aktarımı tamamlandı',
+            ],
+
+            'index-incomplete' => [
+                'message' => 'Bazı ürünlerin fiyat dizini yok. php artisan indexer:index komutunu çalıştırın.',
+                'title' => 'Ürün dizini eksik',
+            ],
+
+            'mail-not-configured' => [
+                'message' => 'SMTP veya Brevo ayarlanana kadar mağaza e-posta gönderemez.',
+                'title' => 'E-posta yapılandırılmamış',
+            ],
+
+            'order' => [
+                'message' => ':customer tarafından :total',
+            ],
+
+            'order-canceled' => [
+                'title' => '#:order numaralı sipariş iptal edildi',
+            ],
+
+            'order-placed' => [
+                'title' => 'Yeni sipariş #:order',
+            ],
+
+            'order-refunded' => [
+                'message' => ':amount iade edildi',
+                'title' => '#:order numaralı sipariş için iade yapıldı',
+            ],
+
+            'queue-worker-stopped' => [
+                'message' => ':connection kuyruğundaki işler bekliyor. php artisan queue:work ile başlatın.',
+                'title' => 'Kuyruk işçisi çalışmıyor',
+            ],
+
+            'return-requested' => [
+                'message' => ':customer tarafından #:order numaralı sipariş',
+                'title' => 'Yeni iade talebi #:id',
+            ],
+
+            'review-created' => [
+                'message' => ':customer, :product ürününe 5 üzerinden :rating verdi',
+                'title' => 'Onay bekleyen yeni değerlendirme',
+            ],
+
+            'scheduler-stopped' => [
+                'message' => 'Zamanlanmış görevler çalışmıyor. Sunucunuza schedule:run cron kaydını ekleyin.',
+                'title' => 'Zamanlayıcı çalışmıyor',
+            ],
+
+            'search-unreachable' => [
+                'message' => 'Arama motoru yanıt vermedi. Bağlantı ayarlarını kontrol edin.',
+                'title' => 'Arama motoruna ulaşılamıyor',
+            ],
+
+            'storage-unreachable' => [
+                'message' => 'Yüklemeler seçilen depolamaya ulaşamıyor. Kimlik bilgilerini kontrol edin.',
+                'title' => 'Uzak depolama kullanılamıyor',
+            ],
+
+            'system' => [
+                'resolved-title' => 'Çözüldü: :title',
+            ],
         ],
     ],
 
@@ -338,10 +464,12 @@ return [
                         'search' => [
                             'add-to-cart' => 'Sepete Ekle',
                             'available-qty' => ':qty Mevcut',
+                            'empty-channel-info' => ':channel kanalında arama terimi için ürün bulunamadı.',
                             'empty-info' => 'Arama terimi için ürün bulunamadı.',
                             'empty-title' => 'Ürün bulunamadı',
                             'product-image' => 'Ürün Görseli',
                             'qty' => 'Adet',
+                            'search-info' => ':channel kanalındaki ürünleri arayın.',
                             'sku' => 'SKU - :sku',
                             'title' => 'Ürünleri Ara',
                         ],
@@ -376,6 +504,7 @@ return [
                         'shipping-address' => 'Teslimat Adresi',
                         'state' => 'Eyalet',
                         'street-address' => 'Adres',
+                        'street-address-line' => 'Adres, :line. Satır',
                         'title' => 'Adres',
                         'vat-id' => 'Vergi Kimlik Numarası',
                     ],
@@ -565,6 +694,7 @@ return [
                 'item-ordered' => 'Sipariş Edilen (:qty_ordered)',
                 'item-refunded' => 'İade Edildi (:qty_refunded)',
                 'item-shipped' => 'Gönderildi (:qty_shipped)',
+                'not-tracked' => 'İzlenmiyor',
                 'order-error' => 'Gönderi geçerli değil',
                 'per-unit' => 'Birim Başına',
                 'qty-available' => 'Mevcut Miktar',
@@ -572,6 +702,8 @@ return [
                 'quantity-invalid' => 'Miktar Geçersiz',
                 'sku' => 'Ürün Kodu - :sku',
                 'source' => 'Kaynak',
+                'stock-not-managed' => 'Stok yönetilmiyor',
+                'stock-not-managed-info' => 'Bu ürünün stoğu yönetilmediği için herhangi bir kaynaktan gönderilebilir ve stok seviyeleri değişmez.',
                 'success' => 'Gönderi başarıyla oluşturuldu',
                 'title' => 'Yeni Gönderi Oluştur',
                 'tracking-number' => 'Takip Numarası',
@@ -1366,6 +1498,7 @@ return [
 
                     'configurable' => [
                         'add-btn' => 'Çeşit Ekle',
+                        'default' => 'Varsayılan',
                         'delete-btn' => 'Sil',
                         'edit-btn' => 'Düzenle',
                         'empty-info' => 'Hızlı bir şekilde ürünün farklı kombinasyonlarını oluşturmak için.',
@@ -2058,12 +2191,17 @@ return [
                 'code' => 'Kod',
                 'column' => 'Sütun',
                 'delete-group-btn' => 'Grubu Sil',
+                'drop-attributes-here' => 'Nitelikleri buraya sürükleyin',
+                'edit-group-btn' => 'Grubu Düzenle',
                 'edit-group-info' => 'Grubu düzenlemek için çift tıklayın',
+                'edit-group-title' => 'Grubu Düzenle',
                 'enter-code' => 'Kod Girin',
                 'enter-name' => 'Ad Girin',
                 'general' => 'Genel',
                 'group-code-already-exists' => 'Bir özellik grubu kodu zaten mevcut.',
                 'group-contains-system-attributes' => 'Bu grup sistem özelliklerini içeriyor. Önce sistem özelliklerini başka bir gruba taşıyın ve tekrar deneyin.',
+                'group-labels' => 'Her Dilde Ad',
+                'group-labels-info' => 'Yukarıdaki adı kullanmak için dili boş bırakın.',
                 'group-name-already-exists' => 'Bir özellik grubu adı zaten mevcut.',
                 'groups' => 'Gruplar',
                 'groups-info' => 'Özellik aile gruplarını yönetin',
@@ -2072,6 +2210,7 @@ return [
                 'removal-not-possible' => 'Sistem özelliklerini özellik ailesinden kaldıramazsınız.',
                 'right-column' => 'Sağ Yan Sütun',
                 'save-btn' => 'Özellik Ailesini Kaydet',
+                'save-group-btn' => 'Grubu Kaydet',
                 'select-group' => 'Lütfen bir özellik grubu seçin.',
                 'title' => 'Özellik Ailesi Oluştur',
                 'unassigned-attributes' => 'Atanmamış Özellikler',
@@ -2085,12 +2224,17 @@ return [
                 'code' => 'Kod',
                 'column' => 'Sütun',
                 'delete-group-btn' => 'Grubu Sil',
+                'drop-attributes-here' => 'Nitelikleri buraya sürükleyin',
+                'edit-group-btn' => 'Grubu Düzenle',
                 'edit-group-info' => 'Grubu düzenlemek için çift tıklayın',
+                'edit-group-title' => 'Grubu Düzenle',
                 'enter-code' => 'Kod Girin',
                 'enter-name' => 'Ad Girin',
                 'general' => 'Genel',
                 'group-code-already-exists' => 'Bir özellik grubu kodu zaten mevcut.',
                 'group-contains-system-attributes' => 'Bu grup sistem özelliklerini içeriyor. Önce sistem özelliklerini başka bir gruba taşıyın ve tekrar deneyin.',
+                'group-labels' => 'Her Dilde Ad',
+                'group-labels-info' => 'Yukarıdaki adı kullanmak için dili boş bırakın.',
                 'group-name-already-exists' => 'Bir özellik grubu adı zaten mevcut.',
                 'groups' => 'Gruplar',
                 'groups-info' => 'Özellik aile gruplarını yönetin',
@@ -2099,6 +2243,7 @@ return [
                 'removal-not-possible' => 'Sistem özelliklerini özellik ailesinden kaldıramazsınız.',
                 'right-column' => 'Sağ Yan Sütun',
                 'save-btn' => 'Özellik Ailesini Kaydet',
+                'save-group-btn' => 'Grubu Kaydet',
                 'select-group' => 'Lütfen bir özellik grubu seçin.',
                 'title' => 'Özellik Ailesini Düzenle',
                 'unassigned-attributes' => 'Atanmamış Özellikler',
@@ -2218,6 +2363,7 @@ return [
                         'select-country' => 'Ülke Seçin',
                         'state' => 'Eyalet',
                         'street-address' => 'Cadde Adresi',
+                        'street-address-line' => 'Cadde Adresi, :line. Satır',
                         'title' => 'Adres Oluştur',
                         'vat-id' => 'KDV Kimlik Numarası',
                     ],
@@ -2237,6 +2383,7 @@ return [
                         'select-country' => 'Ülke Seçin',
                         'state' => 'Eyalet',
                         'street-address' => 'Cadde Adresi',
+                        'street-address-line' => 'Cadde Adresi, :line. Satır',
                         'title' => 'Adresi Düzenle',
                         'vat-id' => 'KDV Kimlik Numarası',
                     ],
@@ -4488,6 +4635,78 @@ return [
                         'yes' => 'Evet',
                     ],
                 ],
+
+                'system-health' => [
+                    'info' => 'Mağazanın çalışması için gerekenler ve ilginizi gerektirenler.',
+                    'open-settings' => 'Ayarları aç',
+                    'summary-attention' => ':total denetimden :count tanesi ilgi gerektiriyor.',
+                    'summary-healthy' => 'Mağazanın ihtiyaç duyduğu her şey çalışıyor.',
+                    'title' => 'Sistem Sağlığı',
+
+                    'checks' => [
+                        'application-url' => [
+                            'info' => 'APP_URL, mağazanın sunulduğu adresle eşleşmelidir.',
+                            'title' => 'Mağaza adresi',
+                        ],
+
+                        'broadcasting' => [
+                            'info' => 'Yeni bildirimleri sayfa yenilenmeden yönetim paneline gönderir.',
+                            'title' => 'Gerçek zamanlı bildirimler',
+                        ],
+
+                        'debug-mode' => [
+                            'info' => 'Hata sayfalarının hiçbir şey açığa çıkarmaması için üretimde kapalı olmalıdır.',
+                            'title' => 'Hata ayıklama modu',
+                        ],
+
+                        'exchange-rates' => [
+                            'info' => 'Birden çok para birimli mağazada kurları güncel tutar.',
+                            'title' => 'Döviz kurları',
+                        ],
+
+                        'failed-jobs' => [
+                            'info' => 'Hatayla duran ve yeniden denenmeyi bekleyen arka plan işleri.',
+                            'title' => 'Başarısız işler',
+                        ],
+
+                        'mail' => [
+                            'info' => 'Sipariş, hesap ve yönetici e-postalarını gönderir.',
+                            'title' => 'E-posta',
+                        ],
+
+                        'product-index' => [
+                            'info' => 'Mağazanın ürünleri listelerken kullandığı fiyatları tutar.',
+                            'title' => 'Ürün dizini',
+                        ],
+
+                        'queue-worker' => [
+                            'info' => 'E-postaları, içe aktarmaları ve dizinlemeyi arka planda işler.',
+                            'title' => 'Kuyruk işçisi',
+                        ],
+
+                        'remote-storage' => [
+                            'info' => 'Ürün görsellerini ve diğer yüklemeleri saklar.',
+                            'title' => 'Dosya depolama',
+                        ],
+
+                        'scheduler' => [
+                            'info' => 'Fiyat kuralları, döviz kurları ve fatura hatırlatmaları gibi zamanlanmış görevleri çalıştırır.',
+                            'title' => 'Zamanlayıcı',
+                        ],
+
+                        'search-engine' => [
+                            'info' => 'Mağaza aramasını ve kategori listelerini yanıtlar.',
+                            'title' => 'Arama motoru',
+                        ],
+                    ],
+
+                    'states' => [
+                        'failing' => 'İlgi gerektiriyor',
+                        'healthy' => 'Çalışıyor',
+                        'idle' => 'Kullanılmıyor',
+                        'unconfirmed' => 'Henüz doğrulanmadı',
+                    ],
+                ],
             ],
 
             'add-file' => 'Dosya Ekle',
@@ -4503,6 +4722,7 @@ return [
             'save-message' => 'Ayarlar başarıyla kaydedildi',
             'search' => 'Ara',
             'select-country' => 'Ülke Seçin',
+            'select-options' => 'Seçenekleri Seçin',
             'select-state' => 'Bölge Seçin',
             'title' => 'Ayarlar',
 
@@ -5337,6 +5557,13 @@ return [
                         'title' => 'Bilgi',
                         'title-info' => 'Adres formunun kaç adres satırı göstereceği.',
                     ],
+
+                    'countries' => [
+                        'allowed' => 'İzin Verilen Ülkeler',
+                        'allowed-info' => 'Tüm ülkeleri sunmak için boş bırakın.',
+                        'title' => 'Ülkeler',
+                        'title-info' => 'Müşterilerin mağazada seçebileceği ülkeler.',
+                    ],
                 ],
 
                 'captcha' => [
@@ -5679,6 +5906,7 @@ return [
                         'info' => 'Dosyaların kaydedileceği ve sunulacağı depolamayı seçin.',
                         'default-driver' => 'Varsayılan Depolama Sürücüsü',
                         'default-driver-info' => 'Bundan sonra yüklenen dosyalar buraya kaydedilir. Daha önce yüklenen dosyalar eski depolamada kalır; geçiş yapmadan önce kopyalayın, aksi halde bulunamazlar.',
+                        'incomplete' => ':driver seçili, ancak ayarları eksik olduğu için yüklenen dosyalar henüz oraya kaydedilmiyor.',
 
                         'drivers' => [
                             'local' => 'Dosya (Yerel Depolama)',
@@ -5691,7 +5919,7 @@ return [
                             'syncing' => 'Eşitleniyor...',
                             'pending' => ':count dosya henüz yapılandırılmış depolamada değil',
                             'up-to-date' => 'Her şey yapılandırılmış depolamada',
-                            'info' => 'Daha önce yüklenmiş dosyaları yapılandırılmış depolamaya kopyalar. Arka planda çalışır, hâlihazırda bulunanları atlar ve özgün dosyaları yerinde bırakır. Büyük bir mağaza için `php artisan bagisto:storage:sync` komutunu çalıştırın.',
+                            'info' => 'Daha önce yüklenmiş dosyaları yapılandırılmış depolamaya kopyalar. Arka planda çalışır, zaten orada olanları atlar ve orijinal dosyaları yerinde bırakır. Büyük bir mağaza için bunun yerine `php artisan bagisto:storage:sync` komutunu çalıştırın.',
                             'started' => 'Eşitleme başladı. Dosyalar arka planda kopyalanıyor.',
                             'local' => 'Yapılandırılmış depolama yerel disk olduğundan kopyalanacak bir şey yok.',
                         ],
@@ -5832,6 +6060,7 @@ return [
                 'logout' => 'Çıkış',
                 'my-account' => 'Hesabım',
                 'notifications' => 'Bildirimler',
+                'system-health' => 'Sistem Sağlığı',
                 'visit-shop' => 'Mağazayı Ziyaret Et',
 
                 'mega-search' => [
@@ -6062,7 +6291,8 @@ return [
                 'ai-btn-info' => 'Resim Oluştur',
                 'allowed-types' => 'png, jpeg, jpg',
                 'image' => 'Görsel',
-                'not-allowed-error' => 'Yalnızca resim dosyaları (.jpeg, .jpg, .png, ..) izin verilir.',
+                'not-allowed-error' => 'Yalnızca resim dosyaları (:types) izin verilir.',
+                'size-limit-error' => 'Dosya, :size olan en yüksek yükleme boyutunu aşıyor.',
 
                 'ai-generation' => [
                     'apply' => 'Uygula',
@@ -6114,13 +6344,15 @@ return [
                 'add-image' => 'Resim Ekle',
                 'delete' => 'Sil',
                 'download' => 'İndir',
+                'not-allowed-error' => 'Yalnızca :types dosyalarına izin verilir.',
                 'replace' => 'Değiştir',
+                'size-limit-error' => 'Dosya, :size olan en yüksek yükleme boyutunu aşıyor.',
             ],
 
             'videos' => [
                 'add-video-btn' => 'Video Ekle',
-                'allowed-types' => 'mp4, webm, mkv',
-                'not-allowed-error' => 'Yalnızca video dosyaları (.mp4, .mov, .ogg ..) izin verilir.',
+                'not-allowed-error' => 'Yalnızca video dosyaları (:types) izin verilir.',
+                'size-limit-error' => 'Dosya, :size olan en yüksek yükleme boyutunu aşıyor.',
                 'video' => 'Video',
 
                 'seo' => [

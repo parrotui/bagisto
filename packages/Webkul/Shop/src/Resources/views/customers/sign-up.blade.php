@@ -25,10 +25,10 @@
         {!! view_render_event('bagisto.shop.customers.sign-up.logo.before') !!}
 
         <!-- Company Logo -->
-        <div class="flex items-center gap-x-14 max-[1180px]:gap-x-9">
+        <div class="flex items-center gap-x-14 max-1180:gap-x-9">
             <a
                 href="{{ route('shop.home.index') }}"
-                class="m-[0_auto_20px_auto]"
+                class="mx-auto mb-5"
                 aria-label="@lang('shop::app.customers.signup-form.bagisto')"
             >
                 <img
@@ -292,7 +292,7 @@
         </x-slot>
 
         <x-slot:content class="p-5!">
-            <div class="max-h-125 overflow-auto">
+            <div class="rich-text max-h-125 overflow-auto">
                 {!! core()->getConfigData('general.gdpr.agreement.agreement_content') !!}
             </div>
         </x-slot>

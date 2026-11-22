@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'Встановити за замовчуванням',
                     'state' => 'Область',
                     'street-address' => 'Вулиця та номер будинку',
+                    'street-address-line' => 'Вулиця та номер будинку, рядок :line',
                     'title' => 'Адреса',
                     'vat-id' => 'Ідентифікаційний номер ПДВ',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'Виберіть країну',
                     'state' => 'Область',
                     'street-address' => 'Вулиця та номер будинку',
+                    'street-address-line' => 'Вулиця та номер будинку, рядок :line',
                     'title' => 'Адреса',
                     'update-btn' => 'Оновити',
                     'vat-id' => 'Ідентифікаційний номер ПДВ',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'Додати вкладення',
                 'add-image' => 'Додати зображення/відео',
-                'invalid-file-type' => 'Вибраний тип файлу не дозволено.',
+                'invalid-file-type' => 'Дозволені лише файли :types.',
+                'size-limit-error' => 'Файл перевищує максимальний розмір завантаження :size.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'Адреса доставки',
                 'state' => 'Область',
                 'street-address' => 'Вулиця',
+                'street-address-line' => 'Вулиця, рядок :line',
                 'title' => 'Адреса',
                 'vat-id' => 'Ідентифікаційний номер ПДВ',
             ],

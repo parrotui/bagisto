@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'Jadikan Alamat Utama',
                     'state' => 'Provinsi',
                     'street-address' => 'Alamat Jalan',
+                    'street-address-line' => 'Alamat Jalan, Baris :line',
                     'title' => 'Alamat',
                     'vat-id' => 'ID Pajak (NPWP)',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'Pilih Negara',
                     'state' => 'Provinsi',
                     'street-address' => 'Alamat Jalan',
+                    'street-address-line' => 'Alamat Jalan, Baris :line',
                     'title' => 'Alamat',
                     'update-btn' => 'Perbarui',
                     'vat-id' => 'ID Pajak (NPWP)',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'Tambahkan Lampiran',
                 'add-image' => 'Tambahkan Gambar/Video',
-                'invalid-file-type' => 'Tipe file yang dipilih tidak diizinkan.',
+                'invalid-file-type' => 'Hanya file :types yang diperbolehkan.',
+                'size-limit-error' => 'File melebihi ukuran unggah maksimum :size.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'Alamat Pengiriman',
                 'state' => 'Provinsi',
                 'street-address' => 'Alamat Jalan',
+                'street-address-line' => 'Alamat Jalan, Baris :line',
                 'title' => 'Alamat',
                 'vat-id' => 'Nomor NPWP',
             ],

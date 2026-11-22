@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'تنظیم به عنوان پیش‌فرض',
                     'state' => 'استان',
                     'street-address' => 'آدرس خیابان',
+                    'street-address-line' => 'آدرس خیابان، خط :line',
                     'title' => 'آدرس',
                     'vat-id' => 'شناسه مالیاتی',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'انتخاب کشور',
                     'state' => 'استان',
                     'street-address' => 'آدرس خیابان',
+                    'street-address-line' => 'آدرس خیابان، خط :line',
                     'title' => 'آدرس',
                     'update-btn' => 'به روز رسانی',
                     'vat-id' => 'شناسه مالیاتی',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'افزودن پیوست',
                 'add-image' => 'افزودن تصویر/ویدئو',
-                'invalid-file-type' => 'نوع فایل انتخاب‌شده مجاز نیست.',
+                'invalid-file-type' => 'فقط فایل‌های :types مجاز هستند.',
+                'size-limit-error' => 'حجم فایل از حداکثر اندازه مجاز بارگذاری :size بیشتر است.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'آدرس حمل و نقل',
                 'state' => 'استان',
                 'street-address' => 'آدرس خیابان',
+                'street-address-line' => 'آدرس خیابان، خط :line',
                 'title' => 'آدرس',
                 'vat-id' => 'شناسه مالیاتی',
             ],

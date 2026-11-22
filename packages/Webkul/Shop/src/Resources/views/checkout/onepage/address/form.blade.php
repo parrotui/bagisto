@@ -116,6 +116,14 @@
                 {!! view_render_event('bagisto.shop.checkout.onepage.address.form.vat_id.after') !!}
             </template>
 
+            @php
+                $streetLines = \Webkul\Customer\Facades\AddressSettings::streetLines();
+
+                $firstLineTitle = $streetLines > 1
+                    ? trans('shop::app.checkout.onepage.address.street-address-line', ['line' => 1])
+                    : trans('shop::app.checkout.onepage.address.street-address');
+            @endphp
+
             <!-- Street Address -->
             <x-shop::form.control-group>
                 <x-shop::form.control-group.label class="required mt-0!" ::for="controlName + '_address_0'">
@@ -127,8 +135,8 @@
                     ::name="controlName + '.address.[0]'"
                     ::value="address.address[0]"
                     rules="required|address"
-                    :label="trans('shop::app.checkout.onepage.address.street-address')"
-                    :placeholder="trans('shop::app.checkout.onepage.address.street-address')"
+                    :label="$firstLineTitle"
+                    :placeholder="$firstLineTitle"
                     ::id="controlName + '_address_0'"
                 />
 
@@ -137,23 +145,22 @@
                     ::name="controlName + '.address.[0]'"
                 />
 
-                @if (core()->getConfigData('customer.address.information.street_lines') > 1)
-                    @for ($i = 1; $i < core()->getConfigData('customer.address.information.street_lines'); $i++)
-                        <x-shop::form.control-group.control
-                            type="text"
-                            ::name="controlName + '.address.[{{ $i }}]'"
-                            rules="address"
-                            :label="trans('shop::app.checkout.onepage.address.street-address')"
-                            :placeholder="trans('shop::app.checkout.onepage.address.street-address')"
-                            ::id="controlName + '_address_{{ $i }}'"
-                        />
+                @for ($i = 1; $i < $streetLines; $i++)
+                    <x-shop::form.control-group.control
+                        type="text"
+                        ::name="controlName + '.address.[{{ $i }}]'"
+                        ::value="address.address[{{ $i }}]"
+                        rules="address"
+                        :label="trans('shop::app.checkout.onepage.address.street-address-line', ['line' => $i + 1])"
+                        :placeholder="trans('shop::app.checkout.onepage.address.street-address-line', ['line' => $i + 1])"
+                        ::id="controlName + '_address_{{ $i }}'"
+                    />
 
-                        <x-shop::form.control-group.error
-                            class="mb-2"
-                            ::name="controlName + '.address.[{{ $i }}]'"
-                        />
-                    @endfor
-                @endif
+                    <x-shop::form.control-group.error
+                        class="mb-2"
+                        ::name="controlName + '.address.[{{ $i }}]'"
+                    />
+                @endfor
             </x-shop::form.control-group>
 
             {!! view_render_event('bagisto.shop.checkout.onepage.address.form.address.after') !!}
@@ -161,7 +168,7 @@
             <div class="grid grid-cols-2 gap-x-5 max-md:grid-cols-1">
                 <!-- Country -->
                 <x-shop::form.control-group class="mb-4!" ::for="controlName + '_country'">
-                    <x-shop::form.control-group.label class="{{ core()->isCountryRequired() ? 'required' : '' }} mt-0!">
+                    <x-shop::form.control-group.label class="{{ \Webkul\Customer\Facades\AddressSettings::isCountryRequired() ? 'required' : '' }} mt-0!">
                         @lang('shop::app.checkout.onepage.address.country')
                     </x-shop::form.control-group.label>
 
@@ -170,7 +177,7 @@
                         ::name="controlName + '.country'"
                         ::value="address.country"
                         v-model="selectedCountry"
-                        rules="{{ core()->isCountryRequired() ? 'required' : '' }}"
+                        rules="{{ \Webkul\Customer\Facades\AddressSettings::isCountryRequired() ? 'required' : '' }}"
                         :label="trans('shop::app.checkout.onepage.address.country')"
                         :placeholder="trans('shop::app.checkout.onepage.address.country')"
                         ::id="controlName + '_country'"
@@ -195,7 +202,7 @@
 
                 <!-- State -->
                 <x-shop::form.control-group>
-                    <x-shop::form.control-group.label class="{{ core()->isStateRequired() ? 'required' : '' }} mt-0!" ::for="controlName + '_state'">
+                    <x-shop::form.control-group.label class="{{ \Webkul\Customer\Facades\AddressSettings::isStateRequired() ? 'required' : '' }} mt-0!" ::for="controlName + '_state'">
                         @lang('shop::app.checkout.onepage.address.state')
                     </x-shop::form.control-group.label>
 
@@ -204,7 +211,7 @@
                             <x-shop::form.control-group.control
                                 type="select"
                                 ::name="controlName + '.state'"
-                                rules="{{ core()->isStateRequired() ? 'required' : '' }}"
+                                rules="{{ \Webkul\Customer\Facades\AddressSettings::isStateRequired() ? 'required' : '' }}"
                                 ::value="address.state"
                                 v-model="selectedState"
                                 :label="trans('shop::app.checkout.onepage.address.state')"
@@ -230,7 +237,7 @@
                                 ::name="controlName + '.state'"
                                 ::value="address.state"
                                 v-model="selectedState"
-                                rules="{{ core()->isStateRequired() ? 'required' : '' }}"
+                                rules="{{ \Webkul\Customer\Facades\AddressSettings::isStateRequired() ? 'required' : '' }}"
                                 :label="trans('shop::app.checkout.onepage.address.state')"
                                 :placeholder="trans('shop::app.checkout.onepage.address.state')"
                                 ::id="controlName + '_state'"
@@ -268,7 +275,7 @@
 
                 <!-- Postcode -->
                 <x-shop::form.control-group>
-                    <x-shop::form.control-group.label class="{{ core()->isPostCodeRequired() ? 'required' : '' }} mt-0!" ::for="controlName + '_postcode'">
+                    <x-shop::form.control-group.label class="{{ \Webkul\Customer\Facades\AddressSettings::isPostCodeRequired() ? 'required' : '' }} mt-0!" ::for="controlName + '_postcode'">
                         @lang('shop::app.checkout.onepage.address.postcode')
                     </x-shop::form.control-group.label>
 
@@ -276,7 +283,7 @@
                         type="text"
                         ::name="controlName + '.postcode'"
                         ::value="address.postcode"
-                        rules="{{ core()->isPostCodeRequired() ? 'required' : '' }}|postcode"
+                        rules="{{ \Webkul\Customer\Facades\AddressSettings::isPostCodeRequired() ? 'required' : '' }}|postcode"
                         :label="trans('shop::app.checkout.onepage.address.postcode')"
                         :placeholder="trans('shop::app.checkout.onepage.address.postcode')"
                         ::id="controlName + '_postcode'"
@@ -366,7 +373,7 @@
 
             methods: {
                 getCountries() {
-                    this.$axios.get("{{ route('shop.api.core.countries') }}")
+                    this.$axios.get("{{ route('shop.api.customers.addresses.allowed_countries') }}")
                         .then(response => {
                             this.countries = response.data.data;
                         })
@@ -374,7 +381,7 @@
                 },
 
                 getStates() {
-                    this.$axios.get("{{ route('shop.api.core.states') }}")
+                    this.$axios.get("{{ route('shop.api.customers.addresses.allowed_states') }}")
                         .then(response => {
                             this.states = response.data.data;
                         })

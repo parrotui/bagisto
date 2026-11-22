@@ -6,7 +6,7 @@
         additional levels are required, users can customize them according to their needs.
     -->
     <!-- Left Nagivation Section -->
-    <div class="flex items-center gap-x-10 max-[1180px]:gap-x-5">
+    <div class="flex items-center gap-x-10 max-1180:gap-x-5">
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.logo.before') !!}
 
         <a
@@ -205,7 +205,10 @@
                 @auth('customer')
                     <x-slot:content class="p-0!">
                         <div class="grid gap-2.5 p-5 pb-0">
-                            <p class="text-xl font-dmserif" v-pre>
+                            <p
+                                class="truncate text-xl font-dmserif [contain:inline-size]"
+                                v-pre
+                            >
                                 @lang('shop::app.components.layouts.header.desktop.bottom.welcome')’
                                 {{ auth()->guard('customer')->user()->first_name }}
                             </p>
@@ -308,8 +311,9 @@
             >
                 <span>
                     <a
+                        class="block max-w-60 truncate px-5 uppercase"
                         :href="category.url"
-                        class="inline-block px-5 uppercase"
+                        :title="category.name"
                     >
                         @{{ category.name }}
                     </a>
@@ -326,8 +330,11 @@
                             v-for="pairCategoryChildren in pairCategoryChildren(category)"
                         >
                             <template v-for="secondLevelCategory in pairCategoryChildren">
-                                <p class="font-medium text-navyBlue">
-                                    <a :href="secondLevelCategory.url">
+                                <p class="line-clamp-2 max-w-60 font-medium text-navyBlue wrap-anywhere">
+                                    <a
+                                        :href="secondLevelCategory.url"
+                                        :title="secondLevelCategory.name"
+                                    >
                                         @{{ secondLevelCategory.name }}
                                     </a>
                                 </p>
@@ -337,10 +344,13 @@
                                     v-if="secondLevelCategory.children && secondLevelCategory.children.length"
                                 >
                                     <li
-                                        class="text-sm font-medium text-zinc-500"
+                                        class="line-clamp-2 max-w-60 text-sm font-medium text-zinc-500 wrap-anywhere"
                                         v-for="thirdLevelCategory in secondLevelCategory.children"
                                     >
-                                        <a :href="thirdLevelCategory.url">
+                                        <a
+                                            :href="thirdLevelCategory.url"
+                                            :title="thirdLevelCategory.name"
+                                        >
                                             @{{ thirdLevelCategory.name }}
                                         </a>
                                     </li>
@@ -375,8 +385,9 @@
                 >
                     <span>
                         <a
+                            class="block max-w-60 truncate px-5 uppercase"
                             :href="category.url"
-                            class="inline-block px-5 uppercase"
+                            :title="category.name"
                         >
                             @{{ category.name }}
                         </a>
@@ -393,8 +404,11 @@
                             v-for="pairCategoryChildren in pairCategoryChildren(category)"
                         >
                             <template v-for="secondLevelCategory in pairCategoryChildren">
-                                <p class="font-medium text-navyBlue">
-                                    <a :href="secondLevelCategory.url">
+                                <p class="line-clamp-2 max-w-60 font-medium text-navyBlue wrap-anywhere">
+                                    <a
+                                        :href="secondLevelCategory.url"
+                                        :title="secondLevelCategory.name"
+                                    >
                                         @{{ secondLevelCategory.name }}
                                     </a>
                                 </p>
@@ -404,10 +418,13 @@
                                     v-if="secondLevelCategory.children && secondLevelCategory.children.length"
                                 >
                                     <li
-                                        class="text-sm font-medium text-zinc-500"
+                                        class="line-clamp-2 max-w-60 text-sm font-medium text-zinc-500 wrap-anywhere"
                                         v-for="thirdLevelCategory in secondLevelCategory.children"
                                     >
-                                        <a :href="thirdLevelCategory.url">
+                                        <a
+                                            :href="thirdLevelCategory.url"
+                                            :title="thirdLevelCategory.name"
+                                        >
                                             @{{ thirdLevelCategory.name }}
                                         </a>
                                     </li>
@@ -457,8 +474,9 @@
                                     >
                                         <div class="flex items-center justify-between px-6 py-2 transition-colors duration-200 cursor-pointer hover:bg-gray-100">
                                             <a
+                                                class="line-clamp-2 min-w-0 text-base font-medium text-black wrap-anywhere"
                                                 :href="category.url"
-                                                class="text-base font-medium text-black"
+                                                :title="category.name"
                                             >
                                                 @{{ category.name }}
                                             </a>
@@ -475,8 +493,9 @@
                                                     @click="showThirdLevel(secondLevelCategory, category, $event)"
                                                 >
                                                     <a
+                                                        class="line-clamp-2 min-w-0 text-sm font-normal wrap-anywhere"
                                                         :href="secondLevelCategory.url"
-                                                        class="text-sm font-normal"
+                                                        :title="secondLevelCategory.name"
                                                     >
                                                         @{{ secondLevelCategory.name }}
                                                     </a>
@@ -519,8 +538,9 @@
                                         class="mb-2"
                                     >
                                         <a
+                                            class="line-clamp-2 px-6 py-2 text-sm transition-colors duration-200 wrap-anywhere hover:bg-gray-100"
                                             :href="thirdLevelCategory.url"
-                                            class="block px-6 py-2 text-sm transition-colors duration-200 hover:bg-gray-100"
+                                            :title="thirdLevelCategory.name"
                                         >
                                             @{{ thirdLevelCategory.name }}
                                         </a>
@@ -549,6 +569,15 @@
                 }
             },
 
+            computed: {
+                /**
+                 * The key the category tree is kept under in the browser, one per channel and locale.
+                 */
+                categoriesStorageKey() {
+                    return "categories:{{ core()->getCurrentChannelCode() }}:{{ app()->getLocale() }}";
+                },
+            },
+
             mounted() {
                 this.initCategories();
 
@@ -560,9 +589,12 @@
             },
 
             methods: {
+                /**
+                 * Show the category tree kept in the browser for this channel and locale, or fetch it when there is none.
+                 */
                 initCategories() {
                     try {
-                        const stored = localStorage.getItem('categories');
+                        const stored = localStorage.getItem(this.categoriesStorageKey);
 
                         if (stored) {
                             this.categories = JSON.parse(stored);
@@ -572,18 +604,20 @@
 
                             return;
                         }
-
                     } catch (e) {}
 
                     this.getCategories();
                 },
 
+                /**
+                 * Fetch the category tree and keep it in the browser for this channel and locale.
+                 */
                 getCategories() {
                     this.$axios.get("{{ route('shop.api.categories.tree') }}")
                         .then(response => {
                             this.isLoading = false;
                             this.categories = response.data.data;
-                            localStorage.setItem('categories', JSON.stringify(this.categories));
+                            localStorage.setItem(this.categoriesStorageKey, JSON.stringify(this.categories));
 
                             this.$nextTick(this.positionMegaMenus);
                         })
@@ -592,32 +626,51 @@
                         });
                 },
 
+                /**
+                 * Split a category's children into pairs, one pair to each column of its mega menu.
+                 */
                 pairCategoryChildren(category) {
-                    if (! category.children) return [];
+                    if (! category.children) {
+                        return [];
+                    }
 
                     return category.children.reduce((result, value, index, array) => {
                         if (index % 2 === 0) {
                             result.push(array.slice(index, index + 2));
                         }
+
                         return result;
                     }, []);
                 },
 
+                /**
+                 * Open or close the category drawer, starting from the top level when it opens.
+                 */
                 toggleCategoryDrawer() {
-                    this.isDrawerActive = !this.isDrawerActive;
+                    this.isDrawerActive = ! this.isDrawerActive;
+
                     if (this.isDrawerActive) {
                         this.currentViewLevel = 'main';
                     }
                 },
 
+                /**
+                 * Keep the drawer's state in step with the drawer component.
+                 */
                 onDrawerToggle(event) {
                     this.isDrawerActive = event.isActive;
                 },
 
+                /**
+                 * Mark the category drawer closed.
+                 */
                 onDrawerClose(event) {
                     this.isDrawerActive = false;
                 },
 
+                /**
+                 * Show the children of a second-level category that has some, instead of following its link.
+                 */
                 showThirdLevel(secondLevelCategory, parentCategory, event) {
                     if (secondLevelCategory.children && secondLevelCategory.children.length) {
                         this.currentSecondLevelCategory = secondLevelCategory;
@@ -631,10 +684,16 @@
                     }
                 },
 
+                /**
+                 * Go back to the top level of the category drawer.
+                 */
                 goBackToMainView() {
                     this.currentViewLevel = 'main';
                 },
 
+                /**
+                 * Keep each mega menu inside the viewport, moving it back by as much as it spills off either edge.
+                 */
                 positionMegaMenus() {
                     const MARGIN = 12;
                     const viewport = document.documentElement.clientWidth;
@@ -647,9 +706,6 @@
 
                         const rect = dropdown.getBoundingClientRect();
 
-                        /**
-                         * Positive when it spills off the right edge, negative off the left, 0 when it fits.
-                         */
                         const overflow = Math.max(0, rect.right - (viewport - MARGIN)) - Math.max(0, MARGIN - rect.left);
 
                         if (overflow) {

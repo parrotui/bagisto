@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'Set as Default',
                     'state' => 'State',
                     'street-address' => 'Street Address',
+                    'street-address-line' => 'Street Address Line :line',
                     'title' => 'Address',
                     'vat-id' => 'Vat ID',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'Select Country',
                     'state' => 'State',
                     'street-address' => 'Street Address',
+                    'street-address-line' => 'Street Address Line :line',
                     'title' => 'Address',
                     'update-btn' => 'Update',
                     'vat-id' => 'Vat ID',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'Add attachments',
                 'add-image' => 'Add Image/Video',
-                'invalid-file-type' => 'The selected file type is not allowed.',
+                'invalid-file-type' => 'Only :types files are allowed.',
+                'size-limit-error' => 'The file exceeds the maximum upload size of :size.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'Shipping Address',
                 'state' => 'State',
                 'street-address' => 'Street Address',
+                'street-address-line' => 'Street Address Line :line',
                 'title' => 'Address',
                 'vat-id' => 'Vat ID',
             ],

@@ -46,14 +46,35 @@ return [
     ],
 
     'notifications' => [
+        'all' => 'すべて',
+        'description' => '注文、顧客など、対応が必要なことを見逃さずに確認できます。',
         'description-text' => 'すべての通知をリストアップ',
+        'empty-description' => '新しい通知が届くとここに表示されます。',
+        'empty-title' => 'すべて確認済みです',
+        'mark-all-read' => 'すべて既読にする',
+        'mark-read' => '既読にする',
+        'mark-unread' => '未読にする',
+        'marked-all-read' => 'すべての通知を既読にしました。',
         'marked-success' => 'すべての通知が既読としてマークされました',
         'no-record' => '記録が見つかりません',
         'of' => 'の',
         'per-page' => 'ページごと',
         'read-all' => 'すべてを既読にする',
         'title' => 'お知らせ',
-        'view-all' => 'すべて表示',
+        'today' => '今日',
+        'unread' => '未読',
+        'view-all' => 'すべての通知を表示',
+        'yesterday' => '昨日',
+
+        'groups' => [
+            'customers' => '顧客',
+            'gdpr' => 'GDPRデータリクエスト',
+            'imports' => '輸入品',
+            'orders' => '注文',
+            'returns' => 'RMAリクエスト',
+            'reviews' => 'レビュー',
+            'system' => 'システム',
+        ],
 
         'order-status-messages' => [
             'all' => 'すべて',
@@ -63,6 +84,111 @@ return [
             'pending' => '注文保留中',
             'pending-payment' => '支払い保留中',
             'processing' => '注文処理中',
+        ],
+
+        'types' => [
+            'app-url-mismatch' => [
+                'message' => 'APP_URL は :url ですが、ストアは :host から配信されています。メール内のリンクが正しくなくなります。',
+                'title' => 'APP_URL がストアのアドレスと一致しません',
+            ],
+
+            'broadcast-unreachable' => [
+                'message' => 'ブロードキャストサーバーが応答しないため、通知はリアルタイムで更新されません。',
+                'title' => 'リアルタイム通知に接続できません',
+            ],
+
+            'customer-registered' => [
+                'message' => ':name · :email',
+                'title' => '新しい顧客が登録しました',
+            ],
+
+            'debug-mode-enabled' => [
+                'message' => 'エラーページで内部情報が訪問者に表示されます。APP_DEBUG=false を設定してください。',
+                'title' => '本番環境でデバッグモードが有効です',
+            ],
+
+            'exchange-rates-stale' => [
+                'message' => 'レートがスケジュールどおりに更新されていません。為替レートサービスと API キーを確認してください。',
+                'title' => '為替レートが古くなっています',
+            ],
+
+            'failed-jobs' => [
+                'message' => ':count 件の失敗したジョブが待機中です。php artisan queue:failed で確認してください。',
+                'title' => 'キューのジョブが失敗しています',
+            ],
+
+            'gdpr-requested' => [
+                'delete-title' => '新しいデータ削除リクエスト',
+                'message' => ':customer から',
+                'update-title' => '新しいデータ更新リクエスト',
+            ],
+
+            'import-completed' => [
+                'message' => ':processed 行を処理しました',
+                'message-skipped' => ':processed 行を処理し、:skipped 行をスキップしました',
+                'title' => ':type のインポートが完了しました',
+            ],
+
+            'index-incomplete' => [
+                'message' => '価格インデックスのない商品があります。php artisan indexer:index を実行してください。',
+                'title' => '商品インデックスが不完全です',
+            ],
+
+            'mail-not-configured' => [
+                'message' => 'SMTP または Brevo を設定するまで、ストアはメールを送信できません。',
+                'title' => 'メールが設定されていません',
+            ],
+
+            'order' => [
+                'message' => ':customer 様より :total',
+            ],
+
+            'order-canceled' => [
+                'title' => '注文 #:order がキャンセルされました',
+            ],
+
+            'order-placed' => [
+                'title' => '新しい注文 #:order',
+            ],
+
+            'order-refunded' => [
+                'message' => ':amount を返金しました',
+                'title' => '注文 #:order の返金を発行しました',
+            ],
+
+            'queue-worker-stopped' => [
+                'message' => ':connection キューのジョブが待機中です。php artisan queue:work で起動してください。',
+                'title' => 'キューワーカーが動作していません',
+            ],
+
+            'return-requested' => [
+                'message' => ':customer 様の注文 #:order',
+                'title' => '新しい返品リクエスト #:id',
+            ],
+
+            'review-created' => [
+                'message' => ':customer 様が :product を 5 段階中 :rating と評価しました',
+                'title' => '承認待ちの新しいレビュー',
+            ],
+
+            'scheduler-stopped' => [
+                'message' => 'スケジュールされたタスクが実行されていません。サーバーに schedule:run の cron エントリを追加してください。',
+                'title' => 'スケジューラーが動作していません',
+            ],
+
+            'search-unreachable' => [
+                'message' => '検索エンジンが応答しませんでした。接続設定を確認してください。',
+                'title' => '検索エンジンに接続できません',
+            ],
+
+            'storage-unreachable' => [
+                'message' => 'アップロードが選択したストレージに届きません。認証情報を確認してください。',
+                'title' => 'リモートストレージを利用できません',
+            ],
+
+            'system' => [
+                'resolved-title' => '解決済み: :title',
+            ],
         ],
     ],
 
@@ -338,10 +464,12 @@ return [
                         'search' => [
                             'add-to-cart' => 'カートに追加',
                             'available-qty' => ':qty 個利用可能',
+                            'empty-channel-info' => ':channel チャネルには検索用語に該当する商品はありません。',
                             'empty-info' => '検索用語に該当する商品はありません。',
                             'empty-title' => '商品が見つかりません',
                             'product-image' => '商品画像',
                             'qty' => '数量',
+                            'search-info' => ':channel チャネルで利用できる商品を検索してください。',
                             'sku' => 'SKU - :sku',
                             'title' => '商品を検索',
                         ],
@@ -376,6 +504,7 @@ return [
                         'shipping-address' => '配送先住所',
                         'state' => '都道府県',
                         'street-address' => '住所',
+                        'street-address-line' => '住所（:line行目）',
                         'title' => '住所',
                         'vat-id' => 'VAT番号',
                     ],
@@ -565,6 +694,7 @@ return [
                 'item-ordered' => '注文済み (:qty_ordered)',
                 'item-refunded' => '返金済み (:qty_refunded)',
                 'item-shipped' => '出荷済み (:qty_shipped)',
+                'not-tracked' => '追跡なし',
                 'order-error' => '出荷が無効です',
                 'per-unit' => '単位あたり',
                 'qty-available' => '利用可能数量',
@@ -572,6 +702,8 @@ return [
                 'quantity-invalid' => '数量が無効です',
                 'sku' => 'SKU - :sku',
                 'source' => 'ソース',
+                'stock-not-managed' => '在庫管理なし',
+                'stock-not-managed-info' => 'この商品は在庫を管理していないため、どのソースからでも出荷でき、在庫数は変わりません。',
                 'success' => '出荷が正常に作成されました',
                 'title' => '新しい出荷を作成',
                 'tracking-number' => '追跡番号',
@@ -1366,6 +1498,7 @@ return [
 
                     'configurable' => [
                         'add-btn' => 'バリエーションを追加',
+                        'default' => 'デフォルト',
                         'delete-btn' => '削除',
                         'edit-btn' => '編集',
                         'empty-info' => '製品のさまざまな組み合わせをすぐに作成するには。',
@@ -2058,12 +2191,17 @@ return [
                 'code' => 'コード',
                 'column' => 'カラム',
                 'delete-group-btn' => 'グループを削除',
+                'drop-attributes-here' => 'ここに属性をドラッグ',
+                'edit-group-btn' => 'グループを編集',
                 'edit-group-info' => 'ダブルクリックしてグループを編集',
+                'edit-group-title' => 'グループを編集',
                 'enter-code' => 'コードを入力',
                 'enter-name' => '名前を入力',
                 'general' => '一般',
                 'group-code-already-exists' => '属性グループコードはすでに存在しています。',
                 'group-contains-system-attributes' => 'このグループにはシステム属性が含まれています。まずシステム属性を別のグループに移動してから再試行してください。',
+                'group-labels' => '各ロケールの名前',
+                'group-labels-info' => '上の名前を使用する場合はロケールを空欄にしてください。',
                 'group-name-already-exists' => '属性グループ名はすでに存在します。',
                 'groups' => 'グループ',
                 'groups-info' => '属性ファミリーグループを管理',
@@ -2072,6 +2210,7 @@ return [
                 'removal-not-possible' => '属性ファミリーからシステム属性を削除することはできません。',
                 'right-column' => '右側カラム',
                 'save-btn' => '属性ファミリーを保存',
+                'save-group-btn' => 'グループを保存',
                 'select-group' => '属性グループを選択してください。',
                 'title' => '属性ファミリーを作成',
                 'unassigned-attributes' => '未割り当ての属性',
@@ -2085,12 +2224,17 @@ return [
                 'code' => 'コード',
                 'column' => 'カラム',
                 'delete-group-btn' => 'グループを削除',
+                'drop-attributes-here' => 'ここに属性をドラッグ',
+                'edit-group-btn' => 'グループを編集',
                 'edit-group-info' => 'ダブルクリックしてグループを編集',
+                'edit-group-title' => 'グループを編集',
                 'enter-code' => 'コードを入力',
                 'enter-name' => '名前を入力',
                 'general' => '一般',
                 'group-code-already-exists' => '属性グループコードはすでに存在しています。',
                 'group-contains-system-attributes' => 'このグループにはシステム属性が含まれています。まずシステム属性を別のグループに移動してから再試行してください。',
+                'group-labels' => '各ロケールの名前',
+                'group-labels-info' => '上の名前を使用する場合はロケールを空欄にしてください。',
                 'group-name-already-exists' => '属性グループ名はすでに存在します。',
                 'groups' => 'グループ',
                 'groups-info' => '属性ファミリーグループを管理',
@@ -2099,6 +2243,7 @@ return [
                 'removal-not-possible' => '属性ファミリーからシステム属性を削除することはできません。',
                 'right-column' => '右側カラム',
                 'save-btn' => '属性ファミリーを保存',
+                'save-group-btn' => 'グループを保存',
                 'select-group' => '属性グループを選択してください。',
                 'title' => '属性ファミリーを編集',
                 'unassigned-attributes' => '未割り当ての属性',
@@ -2218,6 +2363,7 @@ return [
                         'select-country' => '国を選択',
                         'state' => '都道府県',
                         'street-address' => '住所',
+                        'street-address-line' => '住所（:line行目）',
                         'title' => '住所を作成',
                         'vat-id' => 'VAT ID',
                     ],
@@ -2237,6 +2383,7 @@ return [
                         'select-country' => '国を選択',
                         'state' => '都道府県',
                         'street-address' => '住所',
+                        'street-address-line' => '住所（:line行目）',
                         'title' => '住所を編集',
                         'vat-id' => 'VAT ID',
                     ],
@@ -4488,6 +4635,78 @@ return [
                         'yes' => 'はい',
                     ],
                 ],
+
+                'system-health' => [
+                    'info' => 'ストアの運用に必要なものと、対応が必要なもの。',
+                    'open-settings' => '設定を開く',
+                    'summary-attention' => ':total 件中 :count 件のチェックに対応が必要です。',
+                    'summary-healthy' => 'ストアに必要なものはすべて動作しています。',
+                    'title' => 'システムヘルス',
+
+                    'checks' => [
+                        'application-url' => [
+                            'info' => 'APP_URL はストアが配信されているアドレスと一致している必要があります。',
+                            'title' => 'ストアのアドレス',
+                        ],
+
+                        'broadcasting' => [
+                            'info' => '再読み込みなしで新しい通知を管理パネルに送ります。',
+                            'title' => 'リアルタイム通知',
+                        ],
+
+                        'debug-mode' => [
+                            'info' => 'エラーページで情報が漏れないよう、本番環境ではオフにする必要があります。',
+                            'title' => 'デバッグモード',
+                        ],
+
+                        'exchange-rates' => [
+                            'info' => '複数通貨のストアで通貨レートを最新に保ちます。',
+                            'title' => '為替レート',
+                        ],
+
+                        'failed-jobs' => [
+                            'info' => 'エラーで停止し、再試行を待っているバックグラウンドジョブです。',
+                            'title' => '失敗したジョブ',
+                        ],
+
+                        'mail' => [
+                            'info' => '注文、アカウント、管理者向けのメールを送信します。',
+                            'title' => 'メール',
+                        ],
+
+                        'product-index' => [
+                            'info' => 'ストアフロントが商品を表示する際の価格を保持します。',
+                            'title' => '商品インデックス',
+                        ],
+
+                        'queue-worker' => [
+                            'info' => 'メール、インポート、インデックス作成をバックグラウンドで処理します。',
+                            'title' => 'キューワーカー',
+                        ],
+
+                        'remote-storage' => [
+                            'info' => '商品画像やその他のアップロードを保存します。',
+                            'title' => 'ファイルストレージ',
+                        ],
+
+                        'scheduler' => [
+                            'info' => '価格ルール、為替レート、請求書リマインダーなどの定期タスクを実行します。',
+                            'title' => 'スケジューラー',
+                        ],
+
+                        'search-engine' => [
+                            'info' => 'ストアフロントの検索とカテゴリ一覧に応答します。',
+                            'title' => '検索エンジン',
+                        ],
+                    ],
+
+                    'states' => [
+                        'failing' => '対応が必要',
+                        'healthy' => '動作中',
+                        'idle' => '未使用',
+                        'unconfirmed' => '未確認',
+                    ],
+                ],
             ],
 
             'add-file' => 'ファイルを追加',
@@ -4503,6 +4722,7 @@ return [
             'save-message' => '設定が正常に保存されました',
             'search' => '検索',
             'select-country' => '国を選択',
+            'select-options' => 'オプションを選択',
             'select-state' => '都道府県を選択',
             'title' => '設定',
 
@@ -5337,6 +5557,13 @@ return [
                         'title' => '情報',
                         'title-info' => '住所フォームに表示する住所行の数。',
                     ],
+
+                    'countries' => [
+                        'allowed' => '許可する国',
+                        'allowed-info' => '空のままにすると、すべての国が表示されます。',
+                        'title' => '国',
+                        'title-info' => 'ストアフロントでお客様が選択できる国。',
+                    ],
                 ],
 
                 'captcha' => [
@@ -5679,6 +5906,7 @@ return [
                         'info' => 'ファイルの保存先と配信元となるストレージを選択します。',
                         'default-driver' => '既定のストレージドライバー',
                         'default-driver-info' => '今後アップロードされるファイルはここに保存されます。すでにアップロード済みのファイルは以前のストレージに残るため、切り替える前にコピーしてください。コピーしないと見つからなくなります。',
+                        'incomplete' => ':driver が選択されていますが、設定が不完全なため、アップロードされたファイルはまだそこに保存されていません。',
 
                         'drivers' => [
                             'local' => 'ファイル（ローカルストレージ）',
@@ -5689,11 +5917,11 @@ return [
                         'sync' => [
                             'title' => '既存ファイルを同期',
                             'syncing' => '同期中...',
-                            'pending' => ':count 件のファイルがまだ設定済みストレージにありません',
-                            'up-to-date' => 'すべてのファイルが設定済みストレージにあります',
-                            'info' => 'すでにアップロードされたファイルを設定済みストレージにコピーします。バックグラウンドで実行され、既にあるファイルはスキップし、元のファイルはそのまま残します。大規模ストアでは `php artisan bagisto:storage:sync` を使用してください。',
+                            'pending' => ':count 件のファイルがまだ設定されたストレージにありません',
+                            'up-to-date' => 'すべてのファイルが設定されたストレージにあります',
+                            'info' => 'すでにアップロード済みのファイルを設定されたストレージにコピーします。バックグラウンドで実行され、すでにあるファイルはスキップし、元のファイルはそのまま残します。大規模ストアでは、代わりに `php artisan bagisto:storage:sync` を実行してください。',
                             'started' => '同期を開始しました。ファイルはバックグラウンドでコピーされます。',
-                            'local' => '設定済みストレージはローカルディスクのため、コピーするものはありません。',
+                            'local' => '設定されたストレージはローカルディスクのため、コピーするものはありません。',
                         ],
                     ],
                 ],
@@ -5832,6 +6060,7 @@ return [
                 'logout' => 'ログアウト',
                 'my-account' => 'マイアカウント',
                 'notifications' => '通知',
+                'system-health' => 'システムヘルス',
                 'visit-shop' => 'ショップを訪問',
 
                 'mega-search' => [
@@ -6062,7 +6291,8 @@ return [
                 'ai-btn-info' => '画像生成',
                 'allowed-types' => 'png、jpeg、jpg',
                 'image' => '画像',
-                'not-allowed-error' => '画像ファイル（.jpeg、.jpg、.png、..）のみ許可されています。',
+                'not-allowed-error' => '画像ファイル（:types）のみ許可されています。',
+                'size-limit-error' => 'ファイルが最大アップロードサイズ :size を超えています。',
 
                 'ai-generation' => [
                     'apply' => '適用',
@@ -6114,13 +6344,15 @@ return [
                 'add-image' => '画像を追加',
                 'delete' => '削除',
                 'download' => 'ダウンロード',
+                'not-allowed-error' => ':types ファイルのみ許可されています。',
                 'replace' => '差し替える',
+                'size-limit-error' => 'ファイルが最大アップロードサイズ :size を超えています。',
             ],
 
             'videos' => [
                 'add-video-btn' => 'ビデオを追加',
-                'allowed-types' => 'mp4、webm、mkv',
-                'not-allowed-error' => 'ビデオファイルのみ許可されています（.mp4、.mov、.ogg ..）。',
+                'not-allowed-error' => 'ビデオファイルのみ許可されています（:types）。',
+                'size-limit-error' => 'ファイルが最大アップロードサイズ :size を超えています。',
                 'video' => '動画',
 
                 'seo' => [

@@ -79,13 +79,13 @@ class CustomerController extends Controller
     public function store(): JsonResponse
     {
         $this->validate(request(), [
-            'first_name' => 'string|required',
-            'last_name' => 'string|required',
+            'first_name' => 'string|required|max:255',
+            'last_name' => 'string|required|max:255',
             'gender' => 'required',
             'channel_id' => 'required|integer',
-            'email' => 'required|unique:customers,email,NULL,id,channel_id,'.request('channel_id'),
+            'email' => 'required|max:255|unique:customers,email,NULL,id,channel_id,'.request('channel_id'),
             'date_of_birth' => 'date|before:today',
-            'phone' => ['unique:customers,phone', new PhoneNumber],
+            'phone' => ['unique:customers,phone', new PhoneNumber, 'max:255'],
         ]);
 
         $password = Str::password(16);
@@ -138,12 +138,12 @@ class CustomerController extends Controller
         $customer = $this->customerRepository->findOrFail($id);
 
         $this->validate(request(), [
-            'first_name' => 'string|required',
-            'last_name' => 'string|required',
+            'first_name' => 'string|required|max:255',
+            'last_name' => 'string|required|max:255',
             'gender' => 'required',
-            'email' => 'required|unique:customers,email,'.$id.',id,channel_id,'.$customer->channel_id,
+            'email' => 'required|max:255|unique:customers,email,'.$id.',id,channel_id,'.$customer->channel_id,
             'date_of_birth' => 'date|before:today',
-            'phone' => ['unique:customers,phone,'.$id, new PhoneNumber],
+            'phone' => ['unique:customers,phone,'.$id, new PhoneNumber, 'max:255'],
         ]);
 
         $data = request()->only([
@@ -268,18 +268,22 @@ class CustomerController extends Controller
     }
 
     /**
-     * Result of search customer.
+     * Result of search customer, each carrying the name of the channel the customer belongs to.
      *
      * @return JsonResponse
      */
     public function search()
     {
-        $customers = $this->customerRepository->scopeQuery(function ($query) {
+        $customers = $this->customerRepository->with('channel')->scopeQuery(function ($query) {
             return $query->where('email', db_grammar()->caseInsensitiveLike(), '%'.urldecode(request()->input('query')).'%')
                 ->orWhere('first_name', db_grammar()->caseInsensitiveLike(), '%'.urldecode(request()->input('query')).'%')
                 ->orWhere('last_name', db_grammar()->caseInsensitiveLike(), '%'.urldecode(request()->input('query')).'%')
                 ->orderBy('created_at', 'desc');
         })->paginate(self::COUNT);
+
+        $customers->through(fn ($customer) => array_merge($customer->withoutRelations()->toArray(), [
+            'channel_name' => $customer->channel?->name,
+        ]));
 
         return response()->json($customers);
     }

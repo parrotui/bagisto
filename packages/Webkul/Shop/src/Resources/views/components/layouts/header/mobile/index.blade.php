@@ -301,12 +301,12 @@
 
                             @auth('customer')
                                 <div
-                                    class="flex flex-col justify-between gap-2.5 max-md:gap-0"
+                                    class="flex min-w-0 flex-col justify-between gap-2.5 max-md:gap-0"
                                     v-pre
                                 >
-                                    <p class="text-2xl break-all font-medium max-md:text-xl">{{ trans('shop::app.components.layouts.account.greeting', ['name' => auth()->user()?->first_name]) }}</p>
+                                    <p class="truncate text-2xl font-medium max-md:text-xl">{{ trans('shop::app.components.layouts.account.greeting', ['name' => auth()->user()?->first_name]) }}</p>
 
-                                    <p class="no-underline text-zinc-500 max-md:text-sm">{{ auth()->user()?->email }}</p>
+                                    <p class="truncate no-underline text-zinc-500 max-md:text-sm">{{ auth()->user()?->email }}</p>
                                 </div>
                             @endauth
                         </div>
@@ -441,7 +441,11 @@
                             :class="{'mb-2': category.children && category.children.length}"
                         >
                         <div class="flex items-center justify-between py-2 transition-colors duration-200 cursor-pointer">
-                            <a :href="category.url" class="text-base font-medium text-black">
+                            <a
+                                class="line-clamp-2 min-w-0 text-base font-medium text-black wrap-anywhere"
+                                :href="category.url"
+                                :title="category.name"
+                            >
                                 @{{ category.name }}
                             </a>
                         </div>
@@ -456,7 +460,11 @@
                                         class="flex items-center justify-between py-2 transition-colors duration-200 cursor-pointer"
                                         @click="showThirdLevel(secondLevelCategory, category, $event)"
                                     >
-                                    <a :href="secondLevelCategory.url" class="text-sm font-normal">
+                                    <a
+                                        class="line-clamp-2 min-w-0 text-sm font-normal wrap-anywhere"
+                                        :href="secondLevelCategory.url"
+                                        :title="secondLevelCategory.name"
+                                    >
                                         @{{ secondLevelCategory.name }}
                                     </a>
 
@@ -497,11 +505,12 @@
                             class="mb-2"
                         >
                             <a
+                                class="line-clamp-2 py-2 text-sm transition-colors duration-200 wrap-anywhere"
                                 :href="thirdLevelCategory.url"
-                                class="block py-2 text-sm transition-colors duration-200"
+                                :title="thirdLevelCategory.name"
                             >
-                            @{{ thirdLevelCategory.name }}
-                        </a>
+                                @{{ thirdLevelCategory.name }}
+                            </a>
                     </div>
                 </div>
             </div>
@@ -514,7 +523,7 @@
             template: '#v-mobile-category-template',
 
             data() {
-                return  {
+                return {
                     categories: [],
                     currentViewLevel: 'main',
                     currentSecondLevelCategory: null,
@@ -522,42 +531,61 @@
                 }
             },
 
+            computed: {
+                /**
+                 * The height the menu fills: the window's, less the 61px header below 920px wide.
+                 */
+                getCurrentScreenHeight() {
+                    return window.innerHeight - (window.innerWidth < 920 ? 61 : 0) + 'px';
+                },
+
+                /**
+                 * The key the category tree is kept under in the browser, one per channel and locale.
+                 */
+                categoriesStorageKey() {
+                    return "categories:{{ core()->getCurrentChannelCode() }}:{{ app()->getLocale() }}";
+                },
+            },
+
             mounted() {
                 this.initCategories();
             },
 
-            computed: {
-                getCurrentScreenHeight() {
-                    return window.innerHeight - (window.innerWidth < 920 ? 61 : 0) + 'px';
-                },
-            },
-
             methods: {
+                /**
+                 * Show the category tree kept in the browser for this channel and locale, or fetch it when there is none.
+                 */
                 initCategories() {
                     try {
-                        const stored = localStorage.getItem('categories');
+                        const stored = localStorage.getItem(this.categoriesStorageKey);
 
                         if (stored) {
                             this.categories = JSON.parse(stored);
-                            this.isLoading = false;
+
                             return;
                         }
-
                     } catch (e) {}
 
                     this.getCategories();
                 },
+
+                /**
+                 * Fetch the category tree and keep it in the browser for this channel and locale.
+                 */
                 getCategories() {
                     this.$axios.get("{{ route('shop.api.categories.tree') }}")
                         .then(response => {
                             this.categories = response.data.data;
-                            localStorage.setItem('categories', JSON.stringify(this.categories));
+                            localStorage.setItem(this.categoriesStorageKey, JSON.stringify(this.categories));
                         })
                         .catch(error => {
                             console.log(error);
                         });
                 },
 
+                /**
+                 * Show the children of a second-level category that has some, instead of following its link.
+                 */
                 showThirdLevel(secondLevelCategory, parentCategory, event) {
                     if (secondLevelCategory.children && secondLevelCategory.children.length) {
                         this.currentSecondLevelCategory = secondLevelCategory;
@@ -571,6 +599,9 @@
                     }
                 },
 
+                /**
+                 * Go back to the top level of the category menu.
+                 */
                 goBackToMainView() {
                     this.currentViewLevel = 'main';
                 }
@@ -581,6 +612,9 @@
             template: '#v-mobile-drawer-template',
 
             methods: {
+                /**
+                 * Return the category menu to its top level when the drawer closes.
+                 */
                 onDrawerClose() {
                     this.$refs.mobileCategory.currentViewLevel = 'main';
                 }

@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'デフォルトに設定',
                     'state' => '都道府県',
                     'street-address' => '住所',
+                    'street-address-line' => '住所（:line行目）',
                     'title' => '住所',
                     'vat-id' => 'VAT番号',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => '国を選択',
                     'state' => '都道府県',
                     'street-address' => '住所',
+                    'street-address-line' => '住所（:line行目）',
                     'title' => '住所',
                     'update-btn' => '更新する',
                     'vat-id' => 'VAT番号',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => '添付ファイルを追加',
                 'add-image' => '画像/ビデオを追加',
-                'invalid-file-type' => '選択されたファイル形式は許可されていません。',
+                'invalid-file-type' => ':types ファイルのみ許可されています。',
+                'size-limit-error' => 'ファイルが最大アップロードサイズ :size を超えています。',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => '配送先住所',
                 'state' => '都道府県',
                 'street-address' => '住所',
+                'street-address-line' => '住所（:line行目）',
                 'title' => '住所',
                 'vat-id' => 'VAT番号',
             ],

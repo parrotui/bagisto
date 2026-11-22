@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'Imposta come Predefinito',
                     'state' => 'Stato',
                     'street-address' => 'Indirizzo',
+                    'street-address-line' => 'Indirizzo, riga :line',
                     'title' => 'Indirizzo',
                     'vat-id' => 'Partita IVA',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'Seleziona Paese',
                     'state' => 'Stato',
                     'street-address' => 'Indirizzo',
+                    'street-address-line' => 'Indirizzo, riga :line',
                     'title' => 'Indirizzo',
                     'update-btn' => 'Aggiorna',
                     'vat-id' => 'Partita IVA',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'Aggiungi allegati',
                 'add-image' => 'Aggiungi Immagine/Video',
-                'invalid-file-type' => 'Il tipo di file selezionato non è consentito.',
+                'invalid-file-type' => 'Sono consentiti solo file :types.',
+                'size-limit-error' => 'Il file supera la dimensione massima di caricamento di :size.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'Indirizzo di spedizione',
                 'state' => 'Regione',
                 'street-address' => 'Indirizzo',
+                'street-address-line' => 'Indirizzo, riga :line',
                 'title' => 'Indirizzo',
                 'vat-id' => 'Partita IVA',
             ],

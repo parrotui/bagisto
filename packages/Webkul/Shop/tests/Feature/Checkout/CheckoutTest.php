@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Hash;
+use Webkul\Checkout\Models\Cart;
 use Webkul\Checkout\Models\CartAddress;
 use Webkul\Customer\Models\Customer;
 use Webkul\Product\Models\ProductOrderedInventory;
@@ -80,6 +82,28 @@ it('should still demand a shipping address when the cart holds a stockable item'
         ->assertUnprocessable()
         ->assertJsonValidationErrorFor('shipping.first_name')
         ->assertJsonValidationErrorFor('shipping.address');
+
+    $this->assertDatabaseMissing('addresses', ['cart_id' => $cartId]);
+})->with('shoppers');
+
+it('should refuse address fields longer than the address columns hold', function (bool $signedIn) {
+    $product = $this->createSimpleProduct();
+
+    if ($signedIn) {
+        $this->loginAsCustomer();
+    }
+
+    $cartId = $this->addProductToCart($product->id)->json('data.id');
+
+    postJson(route('shop.checkout.onepage.addresses.store'), [
+        'billing' => $this->storefrontAddress([
+            'first_name' => str_repeat('a', 256),
+            'address' => [str_repeat('b', 200), str_repeat('c', 60)],
+            'use_for_shipping' => true,
+        ]),
+    ])
+        ->assertUnprocessable()
+        ->assertOnlyJsonValidationErrors(['billing.first_name', 'billing.address']);
 
     $this->assertDatabaseMissing('addresses', ['cart_id' => $cartId]);
 })->with('shoppers');
@@ -204,9 +228,26 @@ it('should send a guest to sign in from the address step when the cart holds a p
         'billing' => array_merge($this->storefrontAddress(), ['use_for_shipping' => true]),
     ])
         ->assertOk()
-        ->assertJsonPath('redirect', true)
-        ->assertJsonPath('data', route('shop.customer.session.index'))
+        ->assertJsonPath('data.redirect', true)
+        ->assertJsonPath('data.redirect_url', route('shop.customer.session.index'))
         ->assertSessionHas('shop.url.intended', route('shop.checkout.onepage.index'));
+});
+
+it('should send a guest to sign in from the address step when the cart row has gone since checkout loaded', function () {
+    $product = $this->createSimpleProduct();
+
+    $cartId = $this->addProductToCart($product->id)->json('data.id');
+
+    Cart::query()->whereKey($cartId)->delete();
+
+    Facade::clearResolvedInstance(Webkul\Checkout\Cart::class);
+
+    postJson(route('shop.checkout.onepage.addresses.store'), [
+        'billing' => array_merge($this->storefrontAddress(), ['use_for_shipping' => true]),
+    ])
+        ->assertOk()
+        ->assertJsonPath('data.redirect', true)
+        ->assertJsonPath('data.redirect_url', route('shop.customer.session.index'));
 });
 
 // ============================================================================
@@ -525,6 +566,20 @@ it('should keep a guest on the checkout page when guest checkout is allowed', fu
         ->assertOk();
 });
 
+it('should fill every street line of an address edited at checkout', function () {
+    allowGuestCheckout(true);
+
+    $this->setConfig('customer.address.information.street_lines', 3);
+
+    $this->addProductToCart($this->createSimpleProduct()->id);
+
+    get(route('shop.checkout.onepage.index'))
+        ->assertOk()
+        ->assertSee('placeholder="'.trans('shop::app.checkout.onepage.address.street-address-line', ['line' => 3]).'"', false)
+        ->assertSee(':value="address.address[1]"', false)
+        ->assertSee(':value="address.address[2]"', false);
+});
+
 it('should send a guest to sign in when guest checkout is off and bring them back to checkout after signing in', function () {
     allowGuestCheckout(false);
 
@@ -545,4 +600,88 @@ it('should send a guest to sign in when guest checkout is off and bring them bac
         ->assertRedirect(route('shop.checkout.onepage.index'));
 
     $this->assertAuthenticatedAs($customer, 'customer');
+});
+
+it('should send a guest to sign in from the address step while guest checkout is off', function () {
+    allowGuestCheckout(false);
+
+    $cartId = $this->addProductToCart($this->createSimpleProduct()->id)->json('data.id');
+
+    postJson(route('shop.checkout.onepage.addresses.store'), [
+        'billing' => array_merge($this->storefrontAddress(), ['use_for_shipping' => true]),
+    ])
+        ->assertOk()
+        ->assertJsonPath('data.redirect', true)
+        ->assertJsonPath('data.redirect_url', route('shop.customer.session.index'));
+
+    $this->assertDatabaseMissing('addresses', [
+        'cart_id' => $cartId,
+        'address_type' => CartAddress::ADDRESS_TYPE_BILLING,
+    ]);
+});
+
+it('should send a guest to sign in from the address step when the cart holds a downloadable product', function () {
+    allowGuestCheckout(true);
+
+    $this->addDownloadableProductToCart($this->createDownloadableProduct());
+
+    postJson(route('shop.checkout.onepage.addresses.store'), [
+        'billing' => array_merge($this->storefrontAddress(), ['use_for_shipping' => true]),
+    ])
+        ->assertOk()
+        ->assertJsonPath('data.redirect', true)
+        ->assertJsonPath('data.redirect_url', route('shop.customer.session.index'));
+});
+
+it('should not place a guest order when guest checkout is turned off before the order is placed', function () {
+    allowGuestCheckout(true);
+
+    $cartId = $this->addProductToCart($this->createSimpleProduct()->id)->json('data.id');
+
+    postJson(route('shop.checkout.onepage.addresses.store'), [
+        'billing' => array_merge($this->storefrontAddress(), ['use_for_shipping' => true]),
+        'shipping' => $this->storefrontAddress(),
+    ])->assertOk();
+
+    postJson(route('shop.checkout.onepage.shipping_methods.store'), [
+        'shipping_method' => 'free_free',
+    ])->assertOk();
+
+    postJson(route('shop.checkout.onepage.payment_methods.store'), [
+        'payment' => ['method' => 'cashondelivery'],
+    ])->assertOk();
+
+    allowGuestCheckout(false);
+
+    postJson(route('shop.checkout.onepage.orders.store'))
+        ->assertOk()
+        ->assertJsonPath('data.redirect', true)
+        ->assertJsonPath('data.redirect_url', route('shop.customer.session.index'));
+
+    $this->assertDatabaseMissing('orders', ['cart_id' => $cartId]);
+});
+
+it('should still place an order for a signed in customer while guest checkout is off', function () {
+    allowGuestCheckout(false);
+
+    $this->loginAsCustomer();
+
+    $this->addProductToCart($this->createSimpleProduct()->id);
+
+    postJson(route('shop.checkout.onepage.addresses.store'), [
+        'billing' => array_merge($this->storefrontAddress(), ['use_for_shipping' => true]),
+        'shipping' => $this->storefrontAddress(),
+    ])
+        ->assertOk()
+        ->assertJsonPath('redirect', false);
+
+    postJson(route('shop.checkout.onepage.shipping_methods.store'), [
+        'shipping_method' => 'free_free',
+    ])->assertOk();
+
+    postJson(route('shop.checkout.onepage.payment_methods.store'), [
+        'payment' => ['method' => 'cashondelivery'],
+    ])->assertOk();
+
+    $this->assertOrderPlaced(postJson(route('shop.checkout.onepage.orders.store')));
 });

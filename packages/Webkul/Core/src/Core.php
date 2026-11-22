@@ -3,6 +3,7 @@
 namespace Webkul\Core;
 
 use Carbon\Carbon;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Webkul\Core\Concerns\CurrencyFormatter;
@@ -15,6 +16,7 @@ use Webkul\Core\Repositories\CountryStateRepository;
 use Webkul\Core\Repositories\CurrencyRepository;
 use Webkul\Core\Repositories\ExchangeRateRepository;
 use Webkul\Core\Repositories\LocaleRepository;
+use Webkul\Customer\AddressSettings;
 use Webkul\Customer\Contracts\CustomerGroup;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
 use Webkul\Tax\Repositories\TaxCategoryRepository;
@@ -766,31 +768,37 @@ class Core
     /**
      * Is country required.
      *
+     * @deprecated Use Webkul\Customer\Facades\AddressSettings::isCountryRequired() instead.
+     *
      * @return bool
      */
     public function isCountryRequired()
     {
-        return (bool) $this->getConfigData('customer.address.requirements.country');
+        return app(AddressSettings::class)->isCountryRequired();
     }
 
     /**
      * Is state required.
      *
+     * @deprecated Use Webkul\Customer\Facades\AddressSettings::isStateRequired() instead.
+     *
      * @return bool
      */
     public function isStateRequired()
     {
-        return (bool) $this->getConfigData('customer.address.requirements.state');
+        return app(AddressSettings::class)->isStateRequired();
     }
 
     /**
      * Is postcode required.
      *
+     * @deprecated Use Webkul\Customer\Facades\AddressSettings::isPostCodeRequired() instead.
+     *
      * @return bool
      */
     public function isPostCodeRequired()
     {
-        return (bool) $this->getConfigData('customer.address.requirements.postcode');
+        return app(AddressSettings::class)->isPostCodeRequired();
     }
 
     /**
@@ -929,13 +937,12 @@ class Core
     }
 
     /**
-     * Get max upload size from the php.ini file.
-     *
-     * @return string
+     * Get the largest upload PHP accepts, in kilobytes, whichever of upload_max_filesize
+     * and post_max_size is lower.
      */
-    public function getMaxUploadSize()
+    public function getMaxUploadSize(): int
     {
-        return ini_get('upload_max_filesize');
+        return (int) floor(UploadedFile::getMaxFilesize() / 1024);
     }
 
     /**

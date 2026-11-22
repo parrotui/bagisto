@@ -46,14 +46,35 @@ return [
     ],
 
     'notifications' => [
+        'all' => 'All',
+        'description' => 'Stay on top of orders, customers and everything else that needs your attention.',
         'description-text' => 'List all the Notifications',
+        'empty-description' => 'New notifications will show up here as they come in.',
+        'empty-title' => 'You are all caught up',
+        'mark-all-read' => 'Mark all as read',
+        'mark-read' => 'Mark as read',
+        'mark-unread' => 'Mark as unread',
+        'marked-all-read' => 'All notifications have been marked as read.',
         'marked-success' => 'All notifications have been marked as read',
         'no-record' => 'No Record Found',
         'of' => 'of',
         'per-page' => 'Per Page',
         'read-all' => 'Mark as Read',
         'title' => 'Notifications',
-        'view-all' => 'View All',
+        'today' => 'Today',
+        'unread' => 'Unread',
+        'view-all' => 'View all notifications',
+        'yesterday' => 'Yesterday',
+
+        'groups' => [
+            'customers' => 'Customers',
+            'gdpr' => 'GDPR Data Requests',
+            'imports' => 'Imports',
+            'orders' => 'Orders',
+            'returns' => 'RMA Requests',
+            'reviews' => 'Reviews',
+            'system' => 'System',
+        ],
 
         'order-status-messages' => [
             'all' => 'All',
@@ -63,6 +84,111 @@ return [
             'pending' => 'Order Pending',
             'pending-payment' => 'Pending Payment',
             'processing' => 'Order Processing',
+        ],
+
+        'types' => [
+            'app-url-mismatch' => [
+                'message' => 'APP_URL is :url, but the store is served from :host. Links in emails will be wrong.',
+                'title' => 'APP_URL does not match the store address',
+            ],
+
+            'broadcast-unreachable' => [
+                'message' => 'The broadcasting server did not answer, so notifications will not update live.',
+                'title' => 'Real-time notifications are not reachable',
+            ],
+
+            'customer-registered' => [
+                'message' => ':name · :email',
+                'title' => 'New customer registered',
+            ],
+
+            'debug-mode-enabled' => [
+                'message' => 'Error pages show internal details to visitors. Set APP_DEBUG=false.',
+                'title' => 'Debug mode is on in production',
+            ],
+
+            'exchange-rates-stale' => [
+                'message' => 'Rates have not updated on schedule. Check the exchange rate service and its API key.',
+                'title' => 'Exchange rates are out of date',
+            ],
+
+            'failed-jobs' => [
+                'message' => ':count failed jobs are waiting. Review them with php artisan queue:failed.',
+                'title' => 'Queued jobs are failing',
+            ],
+
+            'gdpr-requested' => [
+                'delete-title' => 'New data deletion request',
+                'message' => 'From :customer',
+                'update-title' => 'New data update request',
+            ],
+
+            'import-completed' => [
+                'message' => ':processed rows processed',
+                'message-skipped' => ':processed rows processed, :skipped skipped',
+                'title' => ':type import completed',
+            ],
+
+            'index-incomplete' => [
+                'message' => 'Some products have no price index. Run php artisan indexer:index.',
+                'title' => 'Product index is incomplete',
+            ],
+
+            'mail-not-configured' => [
+                'message' => 'The store cannot send email until SMTP or Brevo is set up.',
+                'title' => 'Email is not configured',
+            ],
+
+            'order' => [
+                'message' => ':total from :customer',
+            ],
+
+            'order-canceled' => [
+                'title' => 'Order #:order canceled',
+            ],
+
+            'order-placed' => [
+                'title' => 'New order #:order',
+            ],
+
+            'order-refunded' => [
+                'message' => ':amount refunded',
+                'title' => 'Refund issued for order #:order',
+            ],
+
+            'queue-worker-stopped' => [
+                'message' => 'Jobs on the :connection queue are waiting. Start it with php artisan queue:work.',
+                'title' => 'Queue worker is not running',
+            ],
+
+            'return-requested' => [
+                'message' => 'Order #:order from :customer',
+                'title' => 'New return request #:id',
+            ],
+
+            'review-created' => [
+                'message' => ':customer rated :product :rating out of 5',
+                'title' => 'New review awaiting approval',
+            ],
+
+            'scheduler-stopped' => [
+                'message' => 'Scheduled tasks are not running. Add the schedule:run cron entry to your server.',
+                'title' => 'Scheduler is not running',
+            ],
+
+            'search-unreachable' => [
+                'message' => 'The search engine did not answer. Check its connection settings.',
+                'title' => 'Search engine is not reachable',
+            ],
+
+            'storage-unreachable' => [
+                'message' => 'Uploads cannot reach the selected storage. Check its credentials.',
+                'title' => 'Remote storage is not available',
+            ],
+
+            'system' => [
+                'resolved-title' => 'Resolved: :title',
+            ],
         ],
     ],
 
@@ -338,10 +464,12 @@ return [
                         'search' => [
                             'add-to-cart' => 'Add To Cart',
                             'available-qty' => ':qty Available',
+                            'empty-channel-info' => 'No products available in the :channel channel for this search term.',
                             'empty-info' => 'No products available for search term.',
                             'empty-title' => 'No products found',
                             'product-image' => 'Product Image',
                             'qty' => 'Qty',
+                            'search-info' => 'Search for products available in the :channel channel.',
                             'sku' => 'SKU - :sku',
                             'title' => 'Search Products',
                         ],
@@ -376,6 +504,7 @@ return [
                         'shipping-address' => 'Shipping Address',
                         'state' => 'State',
                         'street-address' => 'Street Address',
+                        'street-address-line' => 'Street Address Line :line',
                         'title' => 'Address',
                         'vat-id' => 'Vat ID',
                     ],
@@ -565,6 +694,7 @@ return [
                 'item-ordered' => 'Ordered (:qty_ordered)',
                 'item-refunded' => 'Refunded (:qty_refunded)',
                 'item-shipped' => 'Shipped (:qty_shipped)',
+                'not-tracked' => 'Not Tracked',
                 'order-error' => 'Shipment is not valid',
                 'per-unit' => 'Per Unit',
                 'qty-available' => 'Qty. Available',
@@ -572,6 +702,8 @@ return [
                 'quantity-invalid' => 'Qty. Invalid',
                 'sku' => 'SKU - :sku',
                 'source' => 'Source',
+                'stock-not-managed' => 'Stock Not Managed',
+                'stock-not-managed-info' => 'This product does not manage its stock, so it can ship from any source without changing stock levels.',
                 'success' => 'Shipment created successfully',
                 'title' => 'Create new Shipment',
                 'tracking-number' => 'Tracking Number',
@@ -1366,6 +1498,7 @@ return [
 
                     'configurable' => [
                         'add-btn' => 'Add Variant',
+                        'default' => 'Default',
                         'delete-btn' => 'Delete',
                         'edit-btn' => 'Edit',
                         'empty-info' => 'To create various combination of product on a go.',
@@ -2058,12 +2191,17 @@ return [
                 'code' => 'Code',
                 'column' => 'Column',
                 'delete-group-btn' => 'Delete Group',
+                'drop-attributes-here' => 'Drag attributes here',
+                'edit-group-btn' => 'Edit Group',
                 'edit-group-info' => 'Double Click to edit Group',
+                'edit-group-title' => 'Edit Group',
                 'enter-code' => 'Enter Code',
                 'enter-name' => 'Enter Name',
                 'general' => 'General',
                 'group-code-already-exists' => 'An attribute group code already exists.',
                 'group-contains-system-attributes' => 'This group contains system attributes. First move system attributes to another group and try again.',
+                'group-labels' => 'Name in Each Locale',
+                'group-labels-info' => 'Leave a locale empty to use the name above.',
                 'group-name-already-exists' => 'An attribute group name already exists.',
                 'groups' => 'Groups',
                 'groups-info' => 'Manage attribute family groups',
@@ -2072,6 +2210,7 @@ return [
                 'removal-not-possible' => 'You can not remove system attributes from attribute family.',
                 'right-column' => 'Right Side Column',
                 'save-btn' => 'Save Attribute Family',
+                'save-group-btn' => 'Save Group',
                 'select-group' => 'Please select an attribute group.',
                 'title' => 'Create Attribute Family',
                 'unassigned-attributes' => 'Unassigned Attributes',
@@ -2085,12 +2224,17 @@ return [
                 'code' => 'Code',
                 'column' => 'Column',
                 'delete-group-btn' => 'Delete Group',
+                'drop-attributes-here' => 'Drag attributes here',
+                'edit-group-btn' => 'Edit Group',
                 'edit-group-info' => 'Double Click to edit Group',
+                'edit-group-title' => 'Edit Group',
                 'enter-code' => 'Enter Code',
                 'enter-name' => 'Enter Name',
                 'general' => 'General',
                 'group-code-already-exists' => 'An attribute group code already exists.',
                 'group-contains-system-attributes' => 'This group contains system attributes. First move system attributes to another group and try again.',
+                'group-labels' => 'Name in Each Locale',
+                'group-labels-info' => 'Leave a locale empty to use the name above.',
                 'group-name-already-exists' => 'An attribute group name already exists.',
                 'groups' => 'Groups',
                 'groups-info' => 'Manage attribute family groups',
@@ -2099,6 +2243,7 @@ return [
                 'removal-not-possible' => 'You can not remove system attributes from attribute family.',
                 'right-column' => 'Right Side Column',
                 'save-btn' => 'Save Attribute Family',
+                'save-group-btn' => 'Save Group',
                 'select-group' => 'Please select an attribute group.',
                 'title' => 'Edit Attribute Family',
                 'unassigned-attributes' => 'Unassigned Attributes',
@@ -2218,6 +2363,7 @@ return [
                         'select-country' => 'Select Country',
                         'state' => 'State',
                         'street-address' => 'Street Address',
+                        'street-address-line' => 'Street Address Line :line',
                         'title' => 'Create Address',
                         'vat-id' => 'Vat ID',
                     ],
@@ -2237,6 +2383,7 @@ return [
                         'select-country' => 'Select Country',
                         'state' => 'State',
                         'street-address' => 'Street Address',
+                        'street-address-line' => 'Street Address Line :line',
                         'title' => 'Edit Address',
                         'vat-id' => 'Vat ID',
                     ],
@@ -4488,6 +4635,78 @@ return [
                         'yes' => 'Yes',
                     ],
                 ],
+
+                'system-health' => [
+                    'info' => 'What the store needs to run, and what needs your attention.',
+                    'open-settings' => 'Open settings',
+                    'summary-attention' => ':count of :total checks need attention.',
+                    'summary-healthy' => 'Everything the store needs is working.',
+                    'title' => 'System Health',
+
+                    'checks' => [
+                        'application-url' => [
+                            'info' => 'APP_URL must match the address the store is served on.',
+                            'title' => 'Store address',
+                        ],
+
+                        'broadcasting' => [
+                            'info' => 'Pushes new notifications to the admin panel without a reload.',
+                            'title' => 'Real-time notifications',
+                        ],
+
+                        'debug-mode' => [
+                            'info' => 'Must be off in production so error pages reveal nothing.',
+                            'title' => 'Debug mode',
+                        ],
+
+                        'exchange-rates' => [
+                            'info' => 'Keeps currency rates current on a store with several currencies.',
+                            'title' => 'Exchange rates',
+                        ],
+
+                        'failed-jobs' => [
+                            'info' => 'Background jobs that stopped with an error and wait for a retry.',
+                            'title' => 'Failed jobs',
+                        ],
+
+                        'mail' => [
+                            'info' => 'Sends order, account and admin emails.',
+                            'title' => 'Email',
+                        ],
+
+                        'product-index' => [
+                            'info' => 'Holds the prices the storefront lists products by.',
+                            'title' => 'Product index',
+                        ],
+
+                        'queue-worker' => [
+                            'info' => 'Processes emails, imports and indexing in the background.',
+                            'title' => 'Queue worker',
+                        ],
+
+                        'remote-storage' => [
+                            'info' => 'Stores product images and other uploads.',
+                            'title' => 'File storage',
+                        ],
+
+                        'scheduler' => [
+                            'info' => 'Runs timed tasks such as price rules, exchange rates and invoice reminders.',
+                            'title' => 'Scheduler',
+                        ],
+
+                        'search-engine' => [
+                            'info' => 'Answers storefront search and category listings.',
+                            'title' => 'Search engine',
+                        ],
+                    ],
+
+                    'states' => [
+                        'failing' => 'Needs attention',
+                        'healthy' => 'Working',
+                        'idle' => 'Not in use',
+                        'unconfirmed' => 'Not confirmed yet',
+                    ],
+                ],
             ],
 
             'add-file' => 'Add File',
@@ -4503,6 +4722,7 @@ return [
             'save-message' => 'Configuration saved successfully',
             'search' => 'Search',
             'select-country' => 'Select Country',
+            'select-options' => 'Select Options',
             'select-state' => 'Select State',
             'title' => 'Configuration',
 
@@ -5337,6 +5557,13 @@ return [
                         'title' => 'Information',
                         'title-info' => 'How many street address lines the address form shows.',
                     ],
+
+                    'countries' => [
+                        'allowed' => 'Allowed Countries',
+                        'allowed-info' => 'Leave empty to offer every country.',
+                        'title' => 'Countries',
+                        'title-info' => 'Which countries customers can choose on the storefront.',
+                    ],
                 ],
 
                 'captcha' => [
@@ -5679,6 +5906,7 @@ return [
                         'info' => 'Pick the storage files are saved to and served from.',
                         'default-driver' => 'Default Storage Driver',
                         'default-driver-info' => 'Files uploaded from now on are saved here. Files already uploaded stay on the storage they were saved to, so copy them across before switching or they will not be found.',
+                        'incomplete' => ':driver is selected, but its settings are incomplete, so uploaded files are not being saved to it yet.',
 
                         'drivers' => [
                             'local' => 'File (Local Storage)',
@@ -5832,6 +6060,7 @@ return [
                 'logout' => 'Logout',
                 'my-account' => 'My Account',
                 'notifications' => 'Notifications',
+                'system-health' => 'System Health',
                 'visit-shop' => 'Visit Shop',
 
                 'mega-search' => [
@@ -6062,7 +6291,8 @@ return [
                 'ai-btn-info' => 'Generate Image',
                 'allowed-types' => 'png, jpeg, jpg',
                 'image' => 'Image',
-                'not-allowed-error' => 'Only images files (.jpeg, .jpg, .png, ..) are allowed.',
+                'not-allowed-error' => 'Only image files (:types) are allowed.',
+                'size-limit-error' => 'The file exceeds the maximum upload size of :size.',
 
                 'ai-generation' => [
                     'apply' => 'Apply',
@@ -6114,13 +6344,15 @@ return [
                 'add-image' => 'Add Image',
                 'delete' => 'Delete',
                 'download' => 'Download',
+                'not-allowed-error' => 'Only :types files are allowed.',
                 'replace' => 'Replace',
+                'size-limit-error' => 'The file exceeds the maximum upload size of :size.',
             ],
 
             'videos' => [
                 'add-video-btn' => 'Add Video',
-                'allowed-types' => 'mp4, webm, mkv',
-                'not-allowed-error' => 'Only videos files (.mp4, .mov, .ogg ..) are allowed.',
+                'not-allowed-error' => 'Only video files (:types) are allowed.',
+                'size-limit-error' => 'The file exceeds the maximum upload size of :size.',
                 'video' => 'Video',
 
                 'seo' => [

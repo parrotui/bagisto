@@ -87,9 +87,9 @@
                     :is-selected="true"
                 >
                     <div class="container mt-15 max-1180:px-5">
-                        <p class="text-lg text-zinc-500 max-1180:text-sm">
+                        <div class="rich-text text-lg max-1180:text-sm">
                             {!! $product->description !!}
-                        </p>
+                        </div>
                     </div>
                 </x-shop::tabs.item>
 
@@ -171,7 +171,7 @@
             </x-slot>
 
             <x-slot:content class="max-sm:px-0">
-                <div class="mb-5 text-lg text-zinc-500 max-1180:text-sm max-md:mb-1 max-md:px-4">
+                <div class="rich-text mb-5 text-lg max-1180:text-sm max-md:mb-1 max-md:px-4">
                     {!! $product->description !!}
                 </div>
             </x-slot>
@@ -298,13 +298,13 @@
                                 {!! view_render_event('bagisto.shop.products.name.before', ['product' => $product]) !!}
 
                                 <div class="flex justify-between gap-4">
-                                    <h1 class="wrap-break-word text-3xl font-medium max-sm:text-xl" v-pre>
+                                    <h1 class="wrap-anywhere text-3xl font-medium max-sm:text-xl" v-pre>
                                         {{ $product->name }}
                                     </h1>
 
                                     @if (core()->getConfigData('customer.settings.wishlist.wishlist_option'))
                                         <div
-                                            class="max-sm:min-h-7 max-sm:min-w-7 flex max-h-11.5 min-h-11.5 min-w-11.5 cursor-pointer items-center justify-center rounded-full border bg-white text-2xl transition-all hover:opacity-[0.8] max-sm:max-h-7 max-sm:text-base"
+                                            class="max-sm:min-h-7 max-sm:min-w-7 flex max-h-11.5 min-h-11.5 min-w-11.5 cursor-pointer items-center justify-center rounded-full border bg-white text-2xl transition-all hover:opacity-80 max-sm:max-h-7 max-sm:text-base"
                                             role="button"
                                             aria-label="@lang('shop::app.products.view.add-to-wishlist')"
                                             tabindex="0"
@@ -368,9 +368,9 @@
 
                                 {!! view_render_event('bagisto.shop.products.short_description.before', ['product' => $product]) !!}
 
-                                <p class="mt-6 text-lg text-zinc-500 max-sm:mt-1.5 max-sm:text-sm">
+                                <div class="rich-text mt-6 text-lg max-sm:mt-1.5 max-sm:text-sm">
                                     {!! $product->short_description !!}
-                                </p>
+                                </div>
 
                                 {!! view_render_event('bagisto.shop.products.short_description.after', ['product' => $product]) !!}
 

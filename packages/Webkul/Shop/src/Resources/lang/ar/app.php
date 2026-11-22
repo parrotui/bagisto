@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'تعيين كافتراضي',
                     'state' => 'المنطقة',
                     'street-address' => 'عنوان الشارع',
+                    'street-address-line' => 'عنوان الشارع، السطر :line',
                     'title' => 'العنوان',
                     'vat-id' => 'رقم الضريبة',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'اختر البلد',
                     'state' => 'المنطقة',
                     'street-address' => 'عنوان الشارع',
+                    'street-address-line' => 'عنوان الشارع، السطر :line',
                     'title' => 'العنوان',
                     'update-btn' => 'تحديث',
                     'vat-id' => 'رقم الضريبة',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'إضافة المرفقات',
                 'add-image' => 'إضافة صورة / فيديو',
-                'invalid-file-type' => 'نوع الملف المحدد غير مسموح به.',
+                'invalid-file-type' => 'يُسمح فقط بملفات :types.',
+                'size-limit-error' => 'يتجاوز الملف الحد الأقصى لحجم الرفع :size.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'عنوان الشحن',
                 'state' => 'الولاية',
                 'street-address' => 'عنوان الشارع',
+                'street-address-line' => 'عنوان الشارع، السطر :line',
                 'title' => 'العنوان',
                 'vat-id' => 'رقم الضريبة',
             ],

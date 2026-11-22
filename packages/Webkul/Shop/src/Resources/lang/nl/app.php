@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'Instellen als Standaard',
                     'state' => 'Provincie',
                     'street-address' => 'Straatnaam en Huisnummer',
+                    'street-address-line' => 'Straatnaam en Huisnummer, regel :line',
                     'title' => 'Adres',
                     'vat-id' => 'BTW-nummer',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'Selecteer Land',
                     'state' => 'Provincie',
                     'street-address' => 'Straatnaam en Huisnummer',
+                    'street-address-line' => 'Straatnaam en Huisnummer, regel :line',
                     'title' => 'Adres',
                     'update-btn' => 'Bijwerken',
                     'vat-id' => 'BTW-nummer',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'Bijlagen toevoegen',
                 'add-image' => 'Afbeelding/Video toevoegen',
-                'invalid-file-type' => 'Het geselecteerde bestandstype is niet toegestaan.',
+                'invalid-file-type' => 'Alleen :types-bestanden zijn toegestaan.',
+                'size-limit-error' => 'Het bestand overschrijdt de maximale uploadgrootte van :size.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'Verzendadres',
                 'state' => 'Provincie',
                 'street-address' => 'Straatadres',
+                'street-address-line' => 'Straatadres, regel :line',
                 'title' => 'Adres',
                 'vat-id' => 'BTW-nummer',
             ],

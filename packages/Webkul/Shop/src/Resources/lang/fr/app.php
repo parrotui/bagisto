@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'Définir comme adresse par défaut',
                     'state' => 'État',
                     'street-address' => 'Adresse',
+                    'street-address-line' => 'Adresse, ligne :line',
                     'title' => 'Adresse',
                     'vat-id' => 'Numéro de TVA',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'Sélectionner le pays',
                     'state' => 'État',
                     'street-address' => 'Adresse',
+                    'street-address-line' => 'Adresse, ligne :line',
                     'title' => 'Adresse',
                     'update-btn' => 'Mettre à jour',
                     'vat-id' => 'Numéro de TVA',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'Ajouter des pièces jointes',
                 'add-image' => 'Ajouter une image/vidéo',
-                'invalid-file-type' => 'Le type de fichier sélectionné n\'est pas autorisé.',
+                'invalid-file-type' => 'Seuls les fichiers :types sont autorisés.',
+                'size-limit-error' => 'Le fichier dépasse la taille maximale de téléversement de :size.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'Adresse de livraison',
                 'state' => 'État',
                 'street-address' => 'Adresse de rue',
+                'street-address-line' => 'Adresse de rue, ligne :line',
                 'title' => 'Adresse',
                 'vat-id' => 'Numéro de TVA',
             ],

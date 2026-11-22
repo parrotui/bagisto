@@ -1,5 +1,8 @@
 import { expect, type Page } from "@playwright/test";
+import type { MediaFile } from "@shared/media-files";
+import { MediaGalleryField } from "../../components/MediaGalleryField";
 import { DatagridPage } from "../../DatagridPage";
+import type { AdminPage } from "../../../../setup";
 
 export interface CategoryData {
     name: string;
@@ -7,7 +10,10 @@ export interface CategoryData {
     position?: string;
     filterableAttribute?: string;
     parent?: string;
+    description?: string;
 }
+
+export type CategoryMedia = "Logo" | "Banner";
 
 export class CategoryPage extends DatagridPage {
     constructor(page: Page) {
@@ -93,13 +99,64 @@ export class CategoryPage extends DatagridPage {
         await this.slugInput.fill(data.slug);
         await this.parentOption(data.parent ?? "Root").click();
         await this.positionInput.fill(data.position ?? "1");
-        await this.displayModeSelect.selectOption("products_only");
+        await this.fillDescription(data.description);
         await this.setSwitch(this.statusToggle, this.statusInput, true);
         await this.filterableAttributeOption(
             data.filterableAttribute ?? "Price",
         ).click();
 
         await expect(this.slugInput).toHaveValue(data.slug);
+    }
+
+    private async fillDescription(description?: string): Promise<void> {
+        if (!description) {
+            await this.displayModeSelect.selectOption("products_only");
+
+            return;
+        }
+
+        await (this.page as AdminPage).fillInTinymce(
+            "#description_ifr",
+            description,
+        );
+        await this.displayModeSelect.selectOption("products_and_description");
+    }
+
+    mediaField(field: CategoryMedia): MediaGalleryField {
+        return MediaGalleryField.underHeading(this.page, field);
+    }
+
+    async attemptCreateCategoryWithMedia(
+        data: CategoryData,
+        field: CategoryMedia,
+        file: MediaFile,
+    ): Promise<void> {
+        await this.openCreateForm();
+        await this.fillCreateForm(data);
+        await this.mediaField(field).attach(file);
+        await this.saveButton.click();
+    }
+
+    async attemptSaveMedia(
+        name: string,
+        field: CategoryMedia,
+        file: MediaFile,
+    ): Promise<void> {
+        await this.openEditForm(name);
+        await this.mediaField(field).attach(file);
+        await this.saveButton.click();
+    }
+
+    async saveMedia(
+        name: string,
+        field: CategoryMedia,
+        file: MediaFile,
+    ): Promise<void> {
+        await this.attemptSaveMedia(name, field, file);
+
+        await expect(
+            this.flashMessage("Category updated successfully."),
+        ).toBeVisible();
     }
 
     async createCategory(data: CategoryData): Promise<void> {
@@ -203,15 +260,21 @@ export class CategoryPage extends DatagridPage {
         const row = await this.rowWithColumnValue("Name", name);
 
         await expect(row).toHaveCount(1);
-        await expect(await this.cellOf(row, "Parent Category")).toHaveText(parent);
+        await expect(await this.cellOf(row, "Parent Category")).toHaveText(
+            parent,
+        );
     }
 
     async expectFilteredCategoryListed(name: string): Promise<void> {
-        await expect(await this.rowWithColumnValue("Name", name)).toHaveCount(1);
+        await expect(await this.rowWithColumnValue("Name", name)).toHaveCount(
+            1,
+        );
     }
 
     async expectFilteredCategoryAbsent(name: string): Promise<void> {
-        await expect(await this.rowWithColumnValue("Name", name)).toHaveCount(0);
+        await expect(await this.rowWithColumnValue("Name", name)).toHaveCount(
+            0,
+        );
     }
 
     async expectCategoryAbsent(name: string): Promise<void> {
@@ -222,15 +285,23 @@ export class CategoryPage extends DatagridPage {
         await this.openGrid();
         await this.applyTextFilter("Name", "Root");
 
-        await expect(
-            await this.rowWithColumnValue("Name", "Root"),
-        ).toHaveCount(1);
+        await expect(await this.rowWithColumnValue("Name", "Root")).toHaveCount(
+            1,
+        );
     }
 
     async expectNameInEditForm(name: string): Promise<void> {
         await this.openEditForm(name);
 
         await expect(this.localeNameInput).toHaveValue(name);
+    }
+
+    async expectMediaInEditForm(
+        name: string,
+        field: CategoryMedia,
+    ): Promise<void> {
+        await this.openEditForm(name);
+        await this.mediaField(field).expectStored();
     }
 
     async expectValidationError(message: string): Promise<void> {

@@ -144,6 +144,14 @@
 
                     {!! view_render_event('bagisto.shop.customers.account.addresses.create_form_controls.vat_id.after') !!}
 
+                    @php
+                        $streetLines = \Webkul\Customer\Facades\AddressSettings::streetLines();
+
+                        $firstLineTitle = $streetLines > 1
+                            ? trans('shop::app.customers.account.addresses.create.street-address-line', ['line' => 1])
+                            : trans('shop::app.customers.account.addresses.create.street-address');
+                    @endphp
+
                     <!-- Street Address -->
                     <x-shop::form.control-group>
                         <x-shop::form.control-group.label class="required">
@@ -155,27 +163,23 @@
                             name="address[]"
                             rules="required|address"
                             :value="collect(old('address'))->first()"
-                            :label="trans('shop::app.customers.account.addresses.create.street-address')"
-                            :placeholder="trans('shop::app.customers.account.addresses.create.street-address')"
+                            :label="$firstLineTitle"
+                            :placeholder="$firstLineTitle"
                         />
 
-                        <x-shop::form.control-group.error control-name="address[]" />
-                    </x-shop::form.control-group>
+                        <x-shop::form.control-group.error
+                            class="mb-2"
+                            control-name="address[]"
+                        />
 
-                    {!! view_render_event('bagisto.shop.customers.account.addresses.create_form_controls.street_address.after') !!}
-
-                    @if (
-                        core()->getConfigData('customer.address.information.street_lines')
-                        && core()->getConfigData('customer.address.information.street_lines') > 1
-                    )
-                        @for ($i = 1; $i < core()->getConfigData('customer.address.information.street_lines'); $i++)
+                        @for ($i = 1; $i < $streetLines; $i++)
                             <x-shop::form.control-group.control
                                 type="text"
                                 name="address[{{ $i }}]"
                                 :value="old('address.'.$i)"
                                 rules="address"
-                                :label="trans('shop::app.customers.account.addresses.create.street-address')"
-                                :placeholder="trans('shop::app.customers.account.addresses.create.street-address')"
+                                :label="trans('shop::app.customers.account.addresses.create.street-address-line', ['line' => $i + 1])"
+                                :placeholder="trans('shop::app.customers.account.addresses.create.street-address-line', ['line' => $i + 1])"
                             />
 
                             <x-shop::form.control-group.error
@@ -183,20 +187,20 @@
                                 name="address[{{ $i }}]"
                             />
                         @endfor
-                    @endif
+                    </x-shop::form.control-group>
 
                     {!! view_render_event('bagisto.shop.customers.account.addresses.create_form_controls.street_address.after') !!}
 
                     <!-- Country List-->
                     <x-shop::form.control-group>
-                        <x-shop::form.control-group.label class="{{ core()->isCountryRequired() ? 'required' : '' }}">
+                        <x-shop::form.control-group.label class="{{ \Webkul\Customer\Facades\AddressSettings::isCountryRequired() ? 'required' : '' }}">
                             @lang('shop::app.customers.account.addresses.create.country')
                         </x-shop::form.control-group.label>
             
                         <x-shop::form.control-group.control
                             type="select"
                             name="country"
-                            rules="{{ core()->isCountryRequired() ? 'required' : '' }}"
+                            rules="{{ \Webkul\Customer\Facades\AddressSettings::isCountryRequired() ? 'required' : '' }}"
                             v-model="country"
                             :aria-label="trans('shop::app.customers.account.addresses.create.country')"
                             :label="trans('shop::app.customers.account.addresses.create.country')"
@@ -206,7 +210,7 @@
                                 @lang('shop::app.customers.account.addresses.create.select-country')
                             </option>
             
-                            @foreach (core()->countries() as $country)
+                            @foreach (\Webkul\Customer\Facades\AddressSettings::allowedCountries() as $country)
                                 <option value="{{ $country->code }}">{{ $country->name }}</option>
                             @endforeach
                         </x-shop::form.control-group.control>
@@ -216,7 +220,7 @@
         
                     <!-- State Name -->
                     <x-shop::form.control-group>
-                        <x-shop::form.control-group.label class="{{ core()->isStateRequired() ? 'required' : '' }}">
+                        <x-shop::form.control-group.label class="{{ \Webkul\Customer\Facades\AddressSettings::isStateRequired() ? 'required' : '' }}">
                             @lang('shop::app.customers.account.addresses.create.state')
                         </x-shop::form.control-group.label>
         
@@ -225,7 +229,7 @@
                                 type="select"
                                 id="state"
                                 name="state"
-                                rules="{{ core()->isStateRequired() ? 'required' : '' }}"
+                                rules="{{ \Webkul\Customer\Facades\AddressSettings::isStateRequired() ? 'required' : '' }}"
                                 v-model="state"
                                 :label="trans('shop::app.customers.account.addresses.create.state')"
                                 :placeholder="trans('shop::app.customers.account.addresses.create.state')"
@@ -245,7 +249,7 @@
                                 name="state"
                                 :value="old('state')"
                                 v-model="state"
-                                rules="{{ core()->isStateRequired() ? 'required' : '' }}"
+                                rules="{{ \Webkul\Customer\Facades\AddressSettings::isStateRequired() ? 'required' : '' }}"
                                 :label="trans('shop::app.customers.account.addresses.create.state')"
                                 :placeholder="trans('shop::app.customers.account.addresses.create.state')"
                             />
@@ -278,14 +282,14 @@
 
                     <!-- Post Code -->
                     <x-shop::form.control-group>
-                        <x-shop::form.control-group.label class="{{ core()->isPostCodeRequired() ? 'required' : '' }}">
+                        <x-shop::form.control-group.label class="{{ \Webkul\Customer\Facades\AddressSettings::isPostCodeRequired() ? 'required' : '' }}">
                             @lang('shop::app.customers.account.addresses.create.post-code')
                         </x-shop::form.control-group.label>
 
                         <x-shop::form.control-group.control
                             type="text"
                             name="postcode"
-                            rules="{{ core()->isPostCodeRequired() ? 'required' : '' }}|postcode"
+                            rules="{{ \Webkul\Customer\Facades\AddressSettings::isPostCodeRequired() ? 'required' : '' }}|postcode"
                             :value="old('postcode')"
                             :label="trans('shop::app.customers.account.addresses.create.post-code')"
                             :placeholder="trans('shop::app.customers.account.addresses.create.post-code')"
@@ -327,7 +331,7 @@
                         >
 
                         <label
-                            class="icon-uncheck peer-checked:icon-check-box cursor-pointer text-2xl text-navyBlue peer-checked:text-navyBlue peer-focus-visible:ring-2 peer-focus-visible:ring-navyBlue peer-focus-visible:ring-offset-2 peer-focus-visible:outline-hidden rounded"
+                            class="icon-uncheck peer-checked:icon-check-box cursor-pointer text-2xl text-navyBlue peer-checked:text-navyBlue peer-focus-visible:ring-2 peer-focus-visible:ring-navyBlue peer-focus-visible:ring-offset-2 peer-focus-visible:outline-hidden rounded-sm"
                             for="default_address"
                         >
                         </label>
@@ -363,17 +367,15 @@
 
                         state: "{{ old('state') }}",
 
-                        countryStates: @json(core()->groupedStatesByCountries()),
+                        countryStates: @json(\Webkul\Customer\Facades\AddressSettings::allowedGroupedStates()),
                     }
                 },
     
                 methods: {
+                    /**
+                     * Whether the selected country has states.
+                     */
                     haveStates() {
-                        /*
-                        * The double negation operator is used to convert the value to a boolean.
-                        * It ensures that the final result is a boolean value,
-                        * true if the array has a length greater than 0, and otherwise false.
-                        */
                         return !!this.countryStates[this.country]?.length;
                     },
                 }

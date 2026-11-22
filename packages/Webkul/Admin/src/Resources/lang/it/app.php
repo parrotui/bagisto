@@ -46,14 +46,35 @@ return [
     ],
 
     'notifications' => [
+        'all' => 'Tutti',
+        'description' => 'Tieni sotto controllo ordini, clienti e tutto ciò che richiede la tua attenzione.',
         'description-text' => 'Elenca tutte le notifiche',
+        'empty-description' => 'Le nuove notifiche appariranno qui non appena arrivano.',
+        'empty-title' => 'Sei aggiornato',
+        'mark-all-read' => 'Segna tutto come letto',
+        'mark-read' => 'Segna come letta',
+        'mark-unread' => 'Segna come non letta',
+        'marked-all-read' => 'Tutte le notifiche sono state segnate come lette.',
         'marked-success' => 'Tutte le notifiche sono state segnate come lette',
         'no-record' => 'Nessun Record Trovato',
         'of' => 'di',
         'per-page' => 'Per pagina',
         'read-all' => 'Segna come Letto',
         'title' => 'Notifiche',
-        'view-all' => 'Visualizza Tutte',
+        'today' => 'Oggi',
+        'unread' => 'Non lette',
+        'view-all' => 'Visualizza tutte le notifiche',
+        'yesterday' => 'Ieri',
+
+        'groups' => [
+            'customers' => 'Clienti',
+            'gdpr' => 'Richieste di Dati GDPR',
+            'imports' => 'Importazioni',
+            'orders' => 'Ordini',
+            'returns' => 'Richieste RMA',
+            'reviews' => 'Recensioni',
+            'system' => 'Sistema',
+        ],
 
         'order-status-messages' => [
             'all' => 'Tutti',
@@ -63,6 +84,111 @@ return [
             'pending' => 'Ordine in Sospeso',
             'pending-payment' => 'Pagamento in Sospeso',
             'processing' => 'Ordine in Elaborazione',
+        ],
+
+        'types' => [
+            'app-url-mismatch' => [
+                'message' => 'APP_URL è :url, ma il negozio è servito da :host. I link nelle email saranno errati.',
+                'title' => 'APP_URL non corrisponde all\'indirizzo del negozio',
+            ],
+
+            'broadcast-unreachable' => [
+                'message' => 'Il server di broadcasting non ha risposto, quindi le notifiche non si aggiorneranno in tempo reale.',
+                'title' => 'Le notifiche in tempo reale non sono raggiungibili',
+            ],
+
+            'customer-registered' => [
+                'message' => ':name · :email',
+                'title' => 'Nuovo cliente registrato',
+            ],
+
+            'debug-mode-enabled' => [
+                'message' => 'Le pagine di errore mostrano dettagli interni ai visitatori. Imposta APP_DEBUG=false.',
+                'title' => 'La modalità debug è attiva in produzione',
+            ],
+
+            'exchange-rates-stale' => [
+                'message' => 'I tassi non sono stati aggiornati come pianificato. Controlla il servizio dei tassi di cambio e la sua chiave API.',
+                'title' => 'I tassi di cambio non sono aggiornati',
+            ],
+
+            'failed-jobs' => [
+                'message' => ':count job falliti sono in attesa. Controllali con php artisan queue:failed.',
+                'title' => 'I job in coda stanno fallendo',
+            ],
+
+            'gdpr-requested' => [
+                'delete-title' => 'Nuova richiesta di cancellazione dei dati',
+                'message' => 'Da :customer',
+                'update-title' => 'Nuova richiesta di aggiornamento dei dati',
+            ],
+
+            'import-completed' => [
+                'message' => ':processed righe elaborate',
+                'message-skipped' => ':processed righe elaborate, :skipped saltate',
+                'title' => 'Importazione di :type completata',
+            ],
+
+            'index-incomplete' => [
+                'message' => 'Alcuni prodotti non hanno un indice dei prezzi. Esegui php artisan indexer:index.',
+                'title' => 'L\'indice dei prodotti è incompleto',
+            ],
+
+            'mail-not-configured' => [
+                'message' => 'Il negozio non può inviare email finché SMTP o Brevo non è configurato.',
+                'title' => 'L\'email non è configurata',
+            ],
+
+            'order' => [
+                'message' => ':total da :customer',
+            ],
+
+            'order-canceled' => [
+                'title' => 'Ordine #:order annullato',
+            ],
+
+            'order-placed' => [
+                'title' => 'Nuovo ordine #:order',
+            ],
+
+            'order-refunded' => [
+                'message' => ':amount rimborsato',
+                'title' => 'Rimborso emesso per l\'ordine #:order',
+            ],
+
+            'queue-worker-stopped' => [
+                'message' => 'I job nella coda :connection sono in attesa. Avvialo con php artisan queue:work.',
+                'title' => 'Il worker della coda non è in esecuzione',
+            ],
+
+            'return-requested' => [
+                'message' => 'Ordine #:order di :customer',
+                'title' => 'Nuova richiesta di reso #:id',
+            ],
+
+            'review-created' => [
+                'message' => ':customer ha valutato :product :rating su 5',
+                'title' => 'Nuova recensione in attesa di approvazione',
+            ],
+
+            'scheduler-stopped' => [
+                'message' => 'Le attività pianificate non vengono eseguite. Aggiungi la voce cron schedule:run al tuo server.',
+                'title' => 'Lo scheduler non è in esecuzione',
+            ],
+
+            'search-unreachable' => [
+                'message' => 'Il motore di ricerca non ha risposto. Controlla le impostazioni di connessione.',
+                'title' => 'Il motore di ricerca non è raggiungibile',
+            ],
+
+            'storage-unreachable' => [
+                'message' => 'I caricamenti non raggiungono l\'archiviazione selezionata. Controlla le credenziali.',
+                'title' => 'L\'archiviazione remota non è disponibile',
+            ],
+
+            'system' => [
+                'resolved-title' => 'Risolto: :title',
+            ],
         ],
     ],
 
@@ -338,10 +464,12 @@ return [
                         'search' => [
                             'add-to-cart' => 'Aggiungi al Carrello',
                             'available-qty' => ':qty Disponibili',
+                            'empty-channel-info' => 'Nessun prodotto disponibile sul canale :channel per il termine di ricerca.',
                             'empty-info' => 'Nessun prodotto disponibile per il termine di ricerca.',
                             'empty-title' => 'Nessun prodotto trovato',
                             'product-image' => 'Immagine del Prodotto',
                             'qty' => 'Quantità',
+                            'search-info' => 'Cerca i prodotti disponibili sul canale :channel.',
                             'sku' => 'SKU - :sku',
                             'title' => 'Cerca Prodotti',
                         ],
@@ -376,6 +504,7 @@ return [
                         'shipping-address' => 'Indirizzo di Spedizione',
                         'state' => 'Stato',
                         'street-address' => 'Indirizzo',
+                        'street-address-line' => 'Indirizzo, riga :line',
                         'title' => 'Indirizzo',
                         'vat-id' => 'Partita IVA',
                     ],
@@ -565,6 +694,7 @@ return [
                 'item-ordered' => 'Ordinato (:qty_ordered)',
                 'item-refunded' => 'Rimborsato (:qty_refunded)',
                 'item-shipped' => 'Spedito (:qty_shipped)',
+                'not-tracked' => 'Non monitorata',
                 'order-error' => 'La spedizione non è valida',
                 'per-unit' => 'Per Unità',
                 'qty-available' => 'Quantità Disponibile',
@@ -572,6 +702,8 @@ return [
                 'quantity-invalid' => 'Quantità Non Valida',
                 'sku' => 'SKU - :sku',
                 'source' => 'Origine',
+                'stock-not-managed' => 'Scorte non gestite',
+                'stock-not-managed-info' => 'Le scorte di questo prodotto non sono gestite, quindi può essere spedito da qualsiasi origine senza modificare i livelli delle scorte.',
                 'success' => 'Spedizione creata con successo',
                 'title' => 'Crea nuova Spedizione',
                 'tracking-number' => 'Numero di Tracciamento',
@@ -1366,6 +1498,7 @@ return [
 
                     'configurable' => [
                         'add-btn' => 'Aggiungi Variante',
+                        'default' => 'Predefinito',
                         'delete-btn' => 'Elimina',
                         'edit-btn' => 'Modifica',
                         'empty-info' => 'Per creare varie combinazioni di prodotti al volo.',
@@ -2058,12 +2191,17 @@ return [
                 'code' => 'Codice',
                 'column' => 'Colonna',
                 'delete-group-btn' => 'Elimina Gruppo',
+                'drop-attributes-here' => 'Trascina qui gli attributi',
+                'edit-group-btn' => 'Modifica gruppo',
                 'edit-group-info' => 'Doppio clic per modificare il Gruppo',
+                'edit-group-title' => 'Modifica gruppo',
                 'enter-code' => 'Inserisci Codice',
                 'enter-name' => 'Inserisci Nome',
                 'general' => 'Generale',
                 'group-code-already-exists' => 'Il codice del gruppo attributi esiste già.',
                 'group-contains-system-attributes' => 'Questo gruppo contiene attributi di sistema. Sposta prima gli attributi di sistema in un altro gruppo e riprova.',
+                'group-labels' => 'Nome in ogni lingua',
+                'group-labels-info' => 'Lascia vuota una lingua per usare il nome sopra.',
                 'group-name-already-exists' => 'Il nome del gruppo attributi esiste già.',
                 'groups' => 'Gruppi',
                 'groups-info' => 'Gestisci i gruppi della famiglia di attributi',
@@ -2072,6 +2210,7 @@ return [
                 'removal-not-possible' => 'Non puoi rimuovere attributi di sistema dalla famiglia di attributi.',
                 'right-column' => 'Colonna Lato Destro',
                 'save-btn' => 'Salva Famiglia di Attributi',
+                'save-group-btn' => 'Salva gruppo',
                 'select-group' => 'Seleziona un gruppo di attributi.',
                 'title' => 'Crea Famiglia di Attributi',
                 'unassigned-attributes' => 'Attributi Non Assegnati',
@@ -2085,12 +2224,17 @@ return [
                 'code' => 'Codice',
                 'column' => 'Colonna',
                 'delete-group-btn' => 'Elimina Gruppo',
+                'drop-attributes-here' => 'Trascina qui gli attributi',
+                'edit-group-btn' => 'Modifica gruppo',
                 'edit-group-info' => 'Doppio clic per modificare il Gruppo',
+                'edit-group-title' => 'Modifica gruppo',
                 'enter-code' => 'Inserisci Codice',
                 'enter-name' => 'Inserisci Nome',
                 'general' => 'Generale',
                 'group-code-already-exists' => 'Il codice del gruppo attributi esiste già.',
                 'group-contains-system-attributes' => 'Questo gruppo contiene attributi di sistema. Sposta prima gli attributi di sistema in un altro gruppo e riprova.',
+                'group-labels' => 'Nome in ogni lingua',
+                'group-labels-info' => 'Lascia vuota una lingua per usare il nome sopra.',
                 'group-name-already-exists' => 'Il nome del gruppo attributi esiste già.',
                 'groups' => 'Gruppi',
                 'groups-info' => 'Gestisci i gruppi della famiglia di attributi',
@@ -2099,6 +2243,7 @@ return [
                 'removal-not-possible' => 'Non puoi rimuovere attributi di sistema dalla famiglia di attributi.',
                 'right-column' => 'Colonna Lato Destro',
                 'save-btn' => 'Salva Famiglia di Attributi',
+                'save-group-btn' => 'Salva gruppo',
                 'select-group' => 'Seleziona un gruppo di attributi.',
                 'title' => 'Modifica Famiglia di Attributi',
                 'unassigned-attributes' => 'Attributi Non Assegnati',
@@ -2218,6 +2363,7 @@ return [
                         'select-country' => 'Seleziona Paese',
                         'state' => 'Stato',
                         'street-address' => 'Indirizzo',
+                        'street-address-line' => 'Indirizzo, riga :line',
                         'title' => 'Crea Indirizzo',
                         'vat-id' => 'Partita IVA',
                     ],
@@ -2237,6 +2383,7 @@ return [
                         'select-country' => 'Seleziona Paese',
                         'state' => 'Stato',
                         'street-address' => 'Indirizzo',
+                        'street-address-line' => 'Indirizzo, riga :line',
                         'title' => 'Modifica Indirizzo',
                         'vat-id' => 'Partita IVA',
                     ],
@@ -4488,6 +4635,78 @@ return [
                         'yes' => 'Sì',
                     ],
                 ],
+
+                'system-health' => [
+                    'info' => 'Ciò di cui il negozio ha bisogno per funzionare e ciò che richiede la tua attenzione.',
+                    'open-settings' => 'Apri impostazioni',
+                    'summary-attention' => ':count controlli su :total richiedono attenzione.',
+                    'summary-healthy' => 'Tutto ciò di cui il negozio ha bisogno funziona.',
+                    'title' => 'Stato del sistema',
+
+                    'checks' => [
+                        'application-url' => [
+                            'info' => 'APP_URL deve corrispondere all\'indirizzo da cui il negozio è servito.',
+                            'title' => 'Indirizzo del negozio',
+                        ],
+
+                        'broadcasting' => [
+                            'info' => 'Invia le nuove notifiche al pannello di amministrazione senza ricaricare.',
+                            'title' => 'Notifiche in tempo reale',
+                        ],
+
+                        'debug-mode' => [
+                            'info' => 'Deve essere disattivata in produzione affinché le pagine di errore non rivelino nulla.',
+                            'title' => 'Modalità debug',
+                        ],
+
+                        'exchange-rates' => [
+                            'info' => 'Mantiene aggiornati i tassi in un negozio con più valute.',
+                            'title' => 'Tassi di cambio',
+                        ],
+
+                        'failed-jobs' => [
+                            'info' => 'Job in background interrotti da un errore e in attesa di un nuovo tentativo.',
+                            'title' => 'Job falliti',
+                        ],
+
+                        'mail' => [
+                            'info' => 'Invia le email di ordini, account e amministrazione.',
+                            'title' => 'Email',
+                        ],
+
+                        'product-index' => [
+                            'info' => 'Contiene i prezzi con cui il negozio elenca i prodotti.',
+                            'title' => 'Indice dei prodotti',
+                        ],
+
+                        'queue-worker' => [
+                            'info' => 'Elabora email, importazioni e indicizzazione in background.',
+                            'title' => 'Worker della coda',
+                        ],
+
+                        'remote-storage' => [
+                            'info' => 'Conserva le immagini dei prodotti e gli altri caricamenti.',
+                            'title' => 'Archiviazione file',
+                        ],
+
+                        'scheduler' => [
+                            'info' => 'Esegue attività pianificate come regole di prezzo, tassi di cambio e promemoria delle fatture.',
+                            'title' => 'Scheduler',
+                        ],
+
+                        'search-engine' => [
+                            'info' => 'Risponde alla ricerca del negozio e agli elenchi di categorie.',
+                            'title' => 'Motore di ricerca',
+                        ],
+                    ],
+
+                    'states' => [
+                        'failing' => 'Richiede attenzione',
+                        'healthy' => 'Funziona',
+                        'idle' => 'Non in uso',
+                        'unconfirmed' => 'Non ancora confermato',
+                    ],
+                ],
             ],
 
             'add-file' => 'Aggiungi File',
@@ -4503,6 +4722,7 @@ return [
             'save-message' => 'Configurazione salvata con successo',
             'search' => 'Cerca',
             'select-country' => 'Seleziona Paese',
+            'select-options' => 'Seleziona Opzioni',
             'select-state' => 'Seleziona Stato',
             'title' => 'Configurazione',
 
@@ -5337,6 +5557,13 @@ return [
                         'title' => 'Informazioni',
                         'title-info' => 'Quante righe di indirizzo mostra il modulo.',
                     ],
+
+                    'countries' => [
+                        'allowed' => 'Paesi consentiti',
+                        'allowed-info' => 'Lascia vuoto per offrire tutti i paesi.',
+                        'title' => 'Paesi',
+                        'title-info' => 'Quali paesi i clienti possono scegliere nel negozio.',
+                    ],
                 ],
 
                 'captcha' => [
@@ -5679,6 +5906,7 @@ return [
                         'info' => 'Scegli l\'archiviazione in cui i file vengono salvati e da cui vengono serviti.',
                         'default-driver' => 'Driver di archiviazione predefinito',
                         'default-driver-info' => 'I file caricati d\'ora in poi verranno salvati qui. I file già caricati restano sull\'archiviazione precedente: copiali prima di cambiare, altrimenti non verranno trovati.',
+                        'incomplete' => ':driver è selezionato, ma le sue impostazioni sono incomplete, quindi i file caricati non vengono ancora salvati lì.',
 
                         'drivers' => [
                             'local' => 'File (archiviazione locale)',
@@ -5689,11 +5917,11 @@ return [
                         'sync' => [
                             'title' => 'Sincronizza i file esistenti',
                             'syncing' => 'Sincronizzazione in corso...',
-                            'pending' => ':count file non sono ancora nello spazio di archiviazione configurato',
-                            'up-to-date' => 'Tutto è nello spazio di archiviazione configurato',
-                            'info' => 'Copia i file già caricati nello spazio di archiviazione configurato. L\'operazione viene eseguita in background, salta ciò che è già presente e lascia gli originali al loro posto. Per un negozio grande, esegui `php artisan bagisto:storage:sync`.',
+                            'pending' => ':count file ancora da copiare nell\'archiviazione configurata',
+                            'up-to-date' => 'Tutti i file sono nell\'archiviazione configurata',
+                            'info' => 'Copia i file già caricati nell\'archiviazione configurata. L\'operazione viene eseguita in background, salta ciò che è già presente e lascia gli originali al loro posto. Per un negozio di grandi dimensioni, esegui invece `php artisan bagisto:storage:sync`.',
                             'started' => 'Sincronizzazione avviata. I file vengono copiati in background.',
-                            'local' => 'Lo spazio di archiviazione configurato è il disco locale, quindi non c\'è nulla da copiare.',
+                            'local' => 'L\'archiviazione configurata è il disco locale, quindi non c\'è nulla da copiare.',
                         ],
                     ],
                 ],
@@ -5832,6 +6060,7 @@ return [
                 'logout' => 'Logout',
                 'my-account' => 'Il mio account',
                 'notifications' => 'Notifiche',
+                'system-health' => 'Stato del sistema',
                 'visit-shop' => 'Visita il Negozio',
 
                 'mega-search' => [
@@ -6062,7 +6291,8 @@ return [
                 'ai-btn-info' => 'Genera Immagine',
                 'allowed-types' => 'png, jpeg, jpg',
                 'image' => 'Immagine',
-                'not-allowed-error' => 'Sono consentiti solo file immagine (.jpeg, .jpg, .png, ..).',
+                'not-allowed-error' => 'Sono consentiti solo file immagine (:types).',
+                'size-limit-error' => 'Il file supera la dimensione massima di caricamento di :size.',
 
                 'ai-generation' => [
                     'apply' => 'Applica',
@@ -6114,13 +6344,15 @@ return [
                 'add-image' => 'Aggiungi Immagine',
                 'delete' => 'Elimina',
                 'download' => 'Scarica',
+                'not-allowed-error' => 'Sono consentiti solo file :types.',
                 'replace' => 'Sostituisci',
+                'size-limit-error' => 'Il file supera la dimensione massima di caricamento di :size.',
             ],
 
             'videos' => [
                 'add-video-btn' => 'Aggiungi Video',
-                'allowed-types' => 'mp4, webm, mkv',
-                'not-allowed-error' => 'Sono consentiti solo file video (.mp4, .mov, .ogg ..).',
+                'not-allowed-error' => 'Sono consentiti solo file video (:types).',
+                'size-limit-error' => 'Il file supera la dimensione massima di caricamento di :size.',
                 'video' => 'Video',
 
                 'seo' => [

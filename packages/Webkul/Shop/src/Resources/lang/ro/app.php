@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'Setează ca implicită',
                     'state' => 'Județ',
                     'street-address' => 'Adresa străzii',
+                    'street-address-line' => 'Adresa străzii, rândul :line',
                     'title' => 'Adresă',
                     'vat-id' => 'Cod TVA',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'Selectează țara',
                     'state' => 'Județ',
                     'street-address' => 'Adresa străzii',
+                    'street-address-line' => 'Adresa străzii, rândul :line',
                     'title' => 'Adresă',
                     'update-btn' => 'Actualizează',
                     'vat-id' => 'Cod TVA',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'Adaugă atașamente',
                 'add-image' => 'Adaugă imagine/video',
-                'invalid-file-type' => 'Tipul de fișier selectat nu este permis.',
+                'invalid-file-type' => 'Sunt permise doar fișiere :types.',
+                'size-limit-error' => 'Fișierul depășește dimensiunea maximă de încărcare de :size.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'Adresa de livrare',
                 'state' => 'Județ',
                 'street-address' => 'Adresa străzii',
+                'street-address-line' => 'Adresa străzii, rândul :line',
                 'title' => 'Adresă',
                 'vat-id' => 'Cod TVA',
             ],

@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'Establecer como Predeterminada',
                     'state' => 'Estado',
                     'street-address' => 'Dirección',
+                    'street-address-line' => 'Dirección, línea :line',
                     'title' => 'Dirección',
                     'vat-id' => 'ID de IVA',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'Seleccionar País',
                     'state' => 'Estado',
                     'street-address' => 'Dirección',
+                    'street-address-line' => 'Dirección, línea :line',
                     'title' => 'Dirección',
                     'update-btn' => 'Actualizar',
                     'vat-id' => 'ID de IVA',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'Agregar adjuntos',
                 'add-image' => 'Agregar Imagen/Video',
-                'invalid-file-type' => 'El tipo de archivo seleccionado no está permitido.',
+                'invalid-file-type' => 'Solo se permiten archivos :types.',
+                'size-limit-error' => 'El archivo supera el tamaño máximo de subida de :size.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'Dirección de envío',
                 'state' => 'Estado',
                 'street-address' => 'Dirección',
+                'street-address-line' => 'Dirección, línea :line',
                 'title' => 'Dirección',
                 'vat-id' => 'ID de IVA',
             ],

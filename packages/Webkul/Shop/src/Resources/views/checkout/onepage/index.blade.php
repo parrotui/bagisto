@@ -20,11 +20,11 @@
     <!-- Page Header -->
     <div class="flex-wrap">
         <div class="flex w-full justify-between border border-b border-l-0 border-r-0 border-t-0 px-15 py-4 max-lg:px-8 max-sm:px-4">
-            <div class="flex items-center gap-x-14 max-[1180px]:gap-x-9">
+            <div class="flex items-center gap-x-14 max-1180:gap-x-9">
                 <a
                     href="{{ route('shop.home.index') }}"
                     class="flex min-h-7.5"
-                    aria-label="@lang('shop::checkout.onepage.index.bagisto')"
+                    aria-label="@lang('shop::app.checkout.onepage.index.home')"
                 >
                     <img
                         src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
@@ -44,7 +44,7 @@
     {!! view_render_event('bagisto.shop.checkout.onepage.header.after') !!}
 
     <!-- Page Content -->
-    <div class="container px-15 max-lg:px-8 max-sm:px-4">
+    <div class="container px-15 wrap-anywhere max-lg:px-8 max-sm:px-4">
 
         {!! view_render_event('bagisto.shop.checkout.onepage.breadcrumbs.before') !!}
 
@@ -164,6 +164,18 @@
                     }
                 },
 
+                created() {
+                    const buyNow = new URLSearchParams(window.location.search).get('buy_now');
+
+                    if (buyNow) {
+                        this.$axios.interceptors.request.use((config) => {
+                            config.params = { ...(config.params || {}), buy_now: buyNow };
+
+                            return config;
+                        });
+                    }
+                },
+
                 mounted() {
                     this.getCart();
                 },
@@ -248,6 +260,17 @@
                             });
                     }
                 },
+            });
+        </script>
+
+        <script type="module">
+            window.addEventListener('pageshow', (event) => {
+                if (
+                    event.persisted
+                    || performance.getEntriesByType('navigation')[0]?.type === 'back_forward'
+                ) {
+                    window.location.reload();
+                }
             });
         </script>
     @endPushOnce

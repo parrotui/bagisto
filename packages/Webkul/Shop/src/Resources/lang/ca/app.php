@@ -147,6 +147,7 @@ return [
                     'set-as-default' => 'Establir com a Predeterminada',
                     'state' => 'Estat',
                     'street-address' => 'Adreça',
+                    'street-address-line' => 'Adreça, línia :line',
                     'title' => 'Adreça',
                     'vat-id' => 'ID de l\'IVA',
                 ],
@@ -164,6 +165,7 @@ return [
                     'select-country' => 'Seleccionar País',
                     'state' => 'Estat',
                     'street-address' => 'Adreça',
+                    'street-address-line' => 'Adreça, línia :line',
                     'title' => 'Adreça',
                     'update-btn' => 'Actualitzar',
                     'vat-id' => 'ID de l\'IVA',
@@ -564,7 +566,8 @@ return [
             'index' => [
                 'add-attachments' => 'Afegir adjunts',
                 'add-image' => 'Afegir Imatge/Vídeo',
-                'invalid-file-type' => 'El tipus de fitxer seleccionat no està permès.',
+                'invalid-file-type' => 'Només es permeten fitxers :types.',
+                'size-limit-error' => 'El fitxer supera la mida màxima de pujada de :size.',
             ],
         ],
 
@@ -1213,6 +1216,7 @@ return [
                 'shipping-address' => 'Adreça d\'enviament',
                 'state' => 'Estat',
                 'street-address' => 'Adreça',
+                'street-address-line' => 'Adreça, línia :line',
                 'title' => 'Adreça',
                 'vat-id' => 'Número d\'Identificació Fiscal',
             ],

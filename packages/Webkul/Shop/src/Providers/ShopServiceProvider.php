@@ -7,11 +7,14 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Webkul\Checkout\Http\Middleware\ResolveBuyNowCart;
 use Webkul\Core\Http\Middleware\PreventRequestsDuringMaintenance;
 use Webkul\Shop\Http\Middleware\AuthenticateCustomer;
 use Webkul\Shop\Http\Middleware\CacheResponse;
 use Webkul\Shop\Http\Middleware\Currency;
 use Webkul\Shop\Http\Middleware\Locale;
+use Webkul\Shop\Http\Middleware\PreviewChannel;
+use Webkul\Shop\Http\Middleware\PreviewImageTheme;
 use Webkul\Shop\Http\Middleware\Theme;
 
 class ShopServiceProvider extends ServiceProvider
@@ -33,6 +36,12 @@ class ShopServiceProvider extends ServiceProvider
             Theme::class,
             Locale::class,
             Currency::class,
+            ResolveBuyNowCart::class,
+        ]);
+
+        $router->middlewareGroup('preview', [
+            PreviewImageTheme::class,
+            PreviewChannel::class,
         ]);
 
         $router->aliasMiddleware('theme', Theme::class);
