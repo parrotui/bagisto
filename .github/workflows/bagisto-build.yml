@@ -133,7 +133,7 @@ jobs:
       - name: Upload Deployment Package
         uses: actions/upload-artifact@v4
         with:
-          name: bagisto-2.5.0-php-8.4.27-postgresql
+          name: bagisto-2.5.2-php-8.4.27-postgresql
           path: bagisto-build.tar.gz
           if-no-files-found: error
           retention-days: 7
