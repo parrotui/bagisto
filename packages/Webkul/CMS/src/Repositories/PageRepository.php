@@ -65,21 +65,36 @@ class PageRepository extends Repository
     }
 
     /**
-     * Checks slug is unique or not based on locale.
+     * Check that no other page, on any channel, uses the url key.
      *
-     * @param  int  $id
+     * @deprecated Use isUrlKeyUniqueInChannels().
+     *
+     * @param  int|null  $id
      * @param  string  $urlKey
      * @return bool
      */
     public function isUrlKeyUnique($id, $urlKey)
     {
-        $exists = PageTranslationProxy::modelClass()::where('cms_page_id', '<>', $id)
-            ->where('url_key', $urlKey)
-            ->limit(1)
-            ->select(\DB::raw(1))
-            ->exists();
+        return $this->isUrlKeyUniqueInChannels($id, $urlKey, []);
+    }
 
-        return ! $exists;
+    /**
+     * Check that no other page uses the url key, among the given channels when any are passed.
+     *
+     * @param  array<int, int|string>  $channelIds
+     */
+    public function isUrlKeyUniqueInChannels(?int $id, string $urlKey, array $channelIds): bool
+    {
+        return ! PageTranslationProxy::modelClass()::query()
+            ->when($id, fn ($query) => $query->where('cms_page_id', '<>', $id))
+            ->where('url_key', $urlKey)
+            ->when($channelIds, fn ($query) => $query->whereIn(
+                'cms_page_id',
+                fn ($channelQuery) => $channelQuery->select('cms_page_id')
+                    ->from('cms_page_channels')
+                    ->whereIn('channel_id', $channelIds)
+            ))
+            ->exists();
     }
 
     /**
